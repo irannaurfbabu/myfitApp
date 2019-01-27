@@ -1,0 +1,577 @@
+<!--Double navigation-->
+<header>
+  <app-me-gym-navigation></app-me-gym-navigation>
+</header>
+<!--/.Double navigation-->
+
+<!--Main Layout-->
+<main class="">
+  <div class="container-fluid">
+    <!-- Row#01 -->
+    <div class="row pr-2 pl-2 mt-1">
+      <div class="col-12 h-25">
+        <!-- COL#1ROW#1 -->
+        <div class="row">
+          <div class="col-3">
+            <a [routerLink]="['/managecustomer']">
+              <!--Card-->
+              <div class="card card-cascade cascading-admin-card">
+                <div class="admin-up">
+                  <i class="fa fa-users blue"></i>
+                  <div class="data">
+                    <p class="font-weight-500">CUSTOMERS</p>
+
+                    <h4>
+                      <strong>{{custCount}}</strong>
+                    </h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="progress">
+                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar blue" role="progressbar" style="width: 100%"></div>
+                  </div>
+                  <p class="card-text">Total Active Customers
+                    <span class="float-right">{{custCount}}</span>
+                  </p>
+                </div>
+              </div>
+            </a>
+
+            <!--/.Card-->
+          </div>
+          <div class="col-3">
+            <a [routerLink]="['/collectionReport']">
+              <!--Card-->
+              <div class="card card-cascade cascading-admin-card">
+                <div class="admin-up">
+                  <i class="fa fa-money indigo"></i>
+                  <div class="data">
+                    <p class="font-weight-500">COLLECTION</p>
+                    <h4>
+                      <i class="fas fa-rupee-sign mr-1"></i>
+                      <strong> {{collection}}</strong>
+                    </h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="progress">
+                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar indigo" role="progressbar" style="width: 100%"></div>
+                  </div>
+                  <p class="card-text">Total Collection this month </p>
+                </div>
+              </div>
+            </a>
+            <!--/.Card-->
+          </div>
+          <div class="col-3">
+            <!--Card-->
+            <a [routerLink]="['/manageexpense']">
+              <div class="card card-cascade cascading-admin-card">
+                <div class="admin-up">
+                  <i class="fa fa-money green"></i>
+                  <div class="data">
+                    <p class="font-weight-500">EXPENSE</p>
+                    <h4>
+                      <i class="fas fa-rupee-sign mr-1"></i>
+                      <strong> {{expense}}</strong>
+                    </h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="progress">
+                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar green" role="progressbar" style="width: 100%"></div>
+                  </div>
+                  <p class="card-text">Total Expense this month</p>
+                </div>
+              </div>
+            </a>
+            <!--/.Card-->
+          </div>
+          <div class="col-3">
+            <!--Card-->
+            <a [routerLink]="['/customerduereport']">
+              <div class="card card-cascade cascading-admin-card">
+                <div class="admin-up">
+                  <i class="fa fa-money red"></i>
+                  <div class="data">
+                    <p class="font-weight-500">DUE</p>
+                    <h4>
+                      <i class="fas fa-rupee-sign mr-1"></i>
+                      <strong> {{dueAmount}}</strong>
+                    </h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="progress">
+                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar red" role="progressbar" style="width: 100%"></div>
+                  </div>
+                  <p class="card-text">Total Pending Amount</p>
+                </div>
+
+              </div>
+            </a>
+            <!--/.Card-->
+          </div>
+        </div>
+
+        <!-- COL#1ROW#2 -->
+        <div class="row mt-3">
+
+          <div class="col-8">
+            <div class="row">
+              <div class="col-6">
+                <!--Panel-->
+                <div class="card">
+                  <div class="card-header primary-color white-text">
+                    <i class="far fa-dot-circle fa-fw mr-1"></i> Renewal Pending Trend
+
+                  </div>
+                  <div class="card-body min-height-200">
+                    <!-- <div>
+            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"  
+               ></canvas>
+          </div> -->
+                    <div *ngIf="showExpenseTrendLoader" class="d-flex justify-content-center">
+                      <app-me-gym-circular-loader></app-me-gym-circular-loader>
+                    </div>
+                    <div *ngIf="showNoExpenseTrendData" class="d-flex justify-content-center">
+                      <div class="alert alert-danger" role="alert">
+                        <span class="badge badge-danger">No Data</span>
+                      </div>
+                    </div>
+                    <div style="display: block" *ngIf="!showExpenseTrendLoader && !showNoExpenseTrendData">
+                      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                        [chartType]="barChartType"></canvas>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end mt-3">
+                      <p class="">
+                        <button type="button" mdbBtn color="primary" class="relative waves-light btn btn-sm btn-outline-default mt-3" (click)="basicModal.show()"
+                          mdbWavesEffect>View Details</button>
+
+                        <!-- <button type="button" class="btn btn-sm btn-outline-default" mdbWavesEffect>View Details</button> -->
+                      </p>
+
+                      <!-- Fluid Modal -->
+                      <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true"
+                        style="overflow: auto;">
+                        <div class="modal-dialog modal-fluid" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header primary-color white-text">
+                              <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                              <h4 class="modal-title w-100" id="myModalLabel">Customer Subscription Details</h4>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-12 mt-2">
+                                <div class="card">
+                                  <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="col-6">
+                                      <h4 class="white-text">
+                                        <i class="fas fa-cubes fa-fw fa-1x"></i> Search Report
+
+                                      </h4>
+                                    </div>
+                                    <div class="col-6">
+                                      <!-- ********** Search Bar **********  -->
+                                      <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here"
+                                        [showUnderline]="true" (searchDebounce)="search($event)" flex>
+
+                                      </td-search-box>
+                                      <!-- ********** Search Bar **********  -->
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-body mt-0 pt-0">
+                                    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                    <td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="false" [clickable]="false" [multiple]="false"
+                                      [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
+                                      (sortChange)="sort($event)" [style.height.px]="300">
+
+                                      <ng-template tdDataTableTemplate="daysRemaining" let-value="value">
+                                        <span *ngIf="value < '0'" class="badge badge-danger">Expired</span>
+                                        <span *ngIf="value > '0'" class="badge badge-success">{{value}} Days</span>
+                                        <span *ngIf="value == '0'" class="badge badge-warning">Last Day</span>
+                                      </ng-template>
+                                    </td-data-table>
+
+                                    <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+                                      <h3>No results to display.</h3>
+                                    </div>
+                                    <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="filteredTotal" (change)="changePageSize($event)">
+                                      <span hide-xs>Rows per page:</span>
+                                      <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+                                        <mat-option *ngFor="let size of [50,100,200,500]" [value]="size">
+                                          {{size}}
+                                        </mat-option>
+                                      </mat-select>
+                                      <span>{{pagingBarPageSize.range}}
+                                        <span hide-xs>of {{pagingBarPageSize.total}}</span>
+                                      </span>
+                                    </td-paging-bar>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" mdbBtn color="secondary" class="waves-light btn btn-outline-default btn-rounded btn-sm float-right"
+                                aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Panel-->
+              </div>
+
+
+              <div class="col-6">
+                <table class="table table-hover z-depth-1 ">
+                  <thead class="primary-color">
+                    <tr>
+                      <th colspan="5">
+                        <i class="far fa-dot-circle fa-fw mr-1 white-text"></i>
+                        <span class="font-weight-400 white-text" style="font-size: 1rem">Pack Expiration Details</span>
+                      </th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-weight-500">#</td>
+                      <td class="font-weight-500">Expiration Date</td>
+                      <td class="font-weight-500">Count</td>
+                      <td class="font-weight-500">Period</td>
+                      <td class="font-weight-500">View</td>
+                    </tr>
+                    <tr *ngFor="let renewal of renewalArray let i=index">
+                      <th class="font-weight-400" scope="row">{{i + 1}}</th>
+                      <td class="font-weight-400">{{renewal.pack_expiry_date | date : 'mediumDate'}}</td>
+                      <td class="font-weight-400">{{renewal.total}}</td>
+                      <td class="font-weight-400" *ngIf="renewal.daysFromNow > '0'">
+                        <span class="badge badge-primary">{{renewal.daysFromNow}} Days</span>
+                      </td>
+                      <td class="font-weight-400" *ngIf="renewal.daysFromNow == '0'">
+                        <span class="badge badge-warning">Today</span>
+                      </td>
+                      <th class="font-weight-500">
+                        <a>
+                          <i class="fas fa-eye blue-text" (click)="getCustomers(renewal.pack_expiry_date)" (click)="basicModal1.show()"></i>
+                        </a>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+            <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+              aria-hidden="true" style="overflow: auto;">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header primary-color white-text">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Expiring Customers</h4>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table table-striped table-hover z-depth-1 ">
+                      <thead>
+                        <tr>
+                          <th class="font-weight-500">#</th>
+                          <th class="font-weight-500">Customer Name</th>
+                          <th class="font-weight-500">Pack Name</th>
+                          <th class="font-weight-500">Pack Expiry Date</th>
+                          <th class="font-weight-500">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="_expiringCustomers.length == 0">
+                          <td colspan="8" class="text-center">
+                            <div>
+                              <span class=" badge me-status-chip red lighten-1">No Records</span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let customer of _expiringCustomers let i=index">
+                          <th class="font-weight-400" scope="row">{{i + 1}}</th>
+                          <td class="font-weight-400">{{customer.full_name}}</td>
+                          <td class="font-weight-400">{{customer.pack_name}}</td>
+                          <td class="font-weight-400">{{customer.pack_expiry_date | date : 'mediumDate'}}</td>
+                          <td class="font-weight-400">
+                            <a [routerLink]="['/editcustomer',customer.customer_number]">
+                              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                          </td>
+
+
+
+                        </tr>
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" mdbBtn color="secondary" class="waves-light btn btn-outline-default btn-rounded btn-sm float-right"
+                      aria-label="Close" (click)="basicModal1.hide()" mdbWavesEffect>Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <div>
+
+                  <!--Panel-->
+                  <div class="card">
+                    <div class="card-header primary-color white-text">
+                      <i class="far fa-dot-circle fa-fw mr-1"></i> Collection Trend
+                      <small>** last 10 collections</small>
+
+                    </div>
+                    <div class="card-body min-height-200">
+                      <div style="display: block">
+                        <!-- <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                      [chartType]="barChartType"></canvas> -->
+                        <div *ngIf="showCollectionTrendLoader" class="d-flex justify-content-center">
+                          <app-me-gym-circular-loader></app-me-gym-circular-loader>
+                        </div>
+                        <div *ngIf="showNoCollectionTrendData" class="d-flex justify-content-center">
+                          <div class="alert alert-danger" role="alert">
+                            <span class="badge badge-danger">No Data</span>
+                          </div>
+                        </div>
+                        <div style="display: block" *ngIf="!showCollectionTrendLoader && !showNoCollectionTrendData">
+                          <canvas baseChart [datasets]="collectionBarChartData" [labels]="collectionBarChartLabels" [options]="lineChartOptions" [legend]="lineChartLegend"
+                            [chartType]="lineChartType"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/.Panel-->
+
+                </div>
+              </div>
+              <div class="col-6">
+                <!--Panel-->
+                <div class="card">
+                  <div class="card-header primary-color white-text">
+                    <i class="far fa-dot-circle fa-fw mr-1"></i> Expense Trend
+                    <small class="">** last 10 expenses</small>
+                  </div>
+                  <div class="card-body min-height-200">
+                    <!-- <div>
+                  <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"  
+                     ></canvas>
+                </div> -->
+                    <div *ngIf="showExpenseTrendLoader" class="d-flex justify-content-center">
+                      <app-me-gym-circular-loader></app-me-gym-circular-loader>
+                    </div>
+                    <div *ngIf="showNoExpenseTrendData" class="d-flex justify-content-center">
+                      <div class="alert alert-danger" role="alert">
+                        <span class="badge badge-danger">No Data</span>
+                      </div>
+                    </div>
+                    <div style="display: block" *ngIf="!showExpenseTrendLoader && !showNoExpenseTrendData">
+                      <canvas baseChart [datasets]="expenseBarChartData" [labels]="expenseBarChartLabels" [options]="lineChartOptions" [legend]="lineChartLegend"
+                        [chartType]="lineChartType"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Panel-->
+
+              </div>
+            </div>
+            <!-- COL#1ROW#3 -->
+            <div class="row mt-3 mb-3">
+              <div class="col-12">
+                <!--Panel-->
+                <div class="card">
+                  <div class="card-header primary-color white-text">
+                    <i class="far fa-dot-circle fa-fw mr-1"></i> Customer & Employee Attendance Trend
+                  </div>
+                  <div class="card-body">
+                    <!-- <ngx-charts-pie-grid [scheme]="colorScheme" [results]="single">
+                </ngx-charts-pie-grid> -->
+                    <div *ngIf="_empAttendance.length == 0 && _custAttendance.length == 0" class="d-flex justify-content-center">
+                      <div class="alert alert-danger" role="alert">
+                        <span class="badge badge-danger">No Data</span>
+                      </div>
+                    </div>
+                    <div style="display: block" *ngIf="_empAttendance.length > 0 && _custAttendance.length > 0">
+                      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                        [chartType]="barChartType" height="80"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Panel-->
+              </div>
+              <div class="col-6" *ngIf="false">
+                <!--Panel-->
+                <div class="card">
+                  <div class="card-header primary-color white-text">
+                    <i class="far fa-dot-circle fa-fw mr-1"></i> Employee Attendance Trend
+                  </div>
+                  <div class="card-body">
+                    <!-- <ngx-charts-pie-grid [scheme]="colorScheme" [results]="single">
+                </ngx-charts-pie-grid> -->
+
+                  </div>
+                </div>
+                <!--/.Panel-->
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-4 h-25">
+            <!-- COL#2ROW#1 -->
+            <div class="row">
+              <div class="col">
+                <div class="list-group">
+                  <a class="list-group-item primary-color">
+                    <strong class="white-text">
+                      <i class="far fa-dot-circle fa-fw mr-1"></i>Quick Links</strong>
+                  </a>
+                  <a [routerLink]="['/managecustomer']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/group.svg" height="20px" width="20px">Manage Customer</a>
+                  <a [routerLink]="['/manageexpense']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/bank.svg" height="20px" width="20px"> Manage Expense</a>
+                  <a [routerLink]="['/manageemployees']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/employee.svg" height="20px" width="20px"> Manage Employees</a>
+                  <a [routerLink]="['/managepack']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/weightlifting.svg" height="20px" width="20px"> Manage Pack</a>
+                  <a [routerLink]="['/managecomplaint']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/support.svg" height="20px" width="20px"> Manage Complaint</a>
+                  <a [routerLink]="['/manageenquiry']" class="list-group-item list-group-item-action font-weight-400">
+                    <img src="assets/images/info.svg" height="20px" width="20px"> Manage Enquiry</a>
+                </div>
+              </div>
+            </div>
+            <!-- COL#2ROW#2 -->
+            <div class="row mt-3">
+              <div class="col">
+                <ul class="list-group">
+                  <li class="list-group-item primary-color">
+                    <strong class="white-text">
+                      <i class="far fa-dot-circle fa-fw mr-1"></i>Top Packs</strong>
+                  </li>
+                  <div *ngIf="_popularPacks.length == 0" class="d-flex justify-content-center mt-4">
+                    <div class="alert alert-danger" role="alert">
+                      <span class="badge badge-danger">No Data</span>
+                    </div>
+                  </div>
+
+                  <div *ngFor="let pack of _popularPacks">
+                    <li class="list-group-item d-flex justify-content-between align-items-center font-weight-400">
+                      {{pack.pack_name}}
+                      <span class="badge badge-primary badge-pill">{{pack.total_count}}</span>
+                    </li>
+                  </div>
+                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                Dapibus ac facilisis in
+                <span class="badge badge-primary badge-pill">2</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Morbi leo risus
+                <span class="badge badge-primary badge-pill">1</span>
+              </li> -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- COL#2ROW#3 -->
+            <div class="row mt-3">
+              <div class="col">
+                <ul class="list-group">
+                  <li class="list-group-item primary-color">
+                    <strong class="white-text">
+                      <i class="far fa-dot-circle fa-fw mr-1"></i>Complaints</strong>
+                    <small class="white-text"> ** current status</small>
+                  </li>
+
+                  <li class="list-group-item align-items-center font-weight-400">
+                      <div class="d-flex justify-content-between ">
+                        <span class="red-text"> Total Complaints</span>
+                        <span class="badge badge-danger">{{count}}</span>
+                      </div>
+  
+                      <div class=" mt-2 pt-2">
+                        <mat-progress-bar mode="determinate" [value]="100" class="red"></mat-progress-bar>
+                      </div>
+                    </li>
+
+                  <li class="list-group-item align-items-center font-weight-400">
+                    <div class="d-flex justify-content-between ">
+                      <span class="orange-text"> Registered ({{percentRegistered}}%)</span>
+                      <span class="badge badge-warning">{{numRegistered}}</span>
+                    </div>
+
+                    <div class=" mt-2 pt-2">
+                      <mat-progress-bar mode="determinate" [value]="percentRegistered" class="red"></mat-progress-bar>
+                    </div>
+                  </li>
+                  <li class="list-group-item align-items-center font-weight-400">
+                    <div class="d-flex justify-content-between ">
+                      <span class="indigo-text"> Assigned ({{percentAssigned}}%)</span>
+                      <span class="badge badge-primary">{{numAssigned}}</span>
+                    </div>
+                    <div class="mt-2 pt-2">
+                      <mat-progress-bar mode="determinate" [value]="percentAssigned" class="red"></mat-progress-bar>
+                    </div>
+                  </li>
+                  <li class="list-group-item align-items-center font-weight-400">
+                    <div class="d-flex justify-content-between ">
+                      <span class="blue-text">Progress ({{percentInprogress}}%)</span>
+                      <span class="badge badge-info">{{numInprogress}}</span>
+                    </div>
+                    <div class="mt-2 pt-2">
+                      <mat-progress-bar mode="determinate" [value]="percentInprogress" class="red"></mat-progress-bar>
+                    </div>
+                  </li>
+                  <li class="list-group-item align-items-center font-weight-400">
+                    <div class="d-flex justify-content-between ">
+                      <span class="green-text"> Closed ({{percentClosed}}%)</span>
+                      <span class="badge badge-success">{{numClosed}}</span>
+                    </div>
+                    <div class="mt-2 pt-2">
+                      <mat-progress-bar mode="determinate" [value]="percentClosed" class="red"></mat-progress-bar>
+                    </div>
+                  </li>
+                  <li class="list-group-item align-items-center font-weight-400">
+                    <div class="d-flex justify-content-between ">
+                      <span class="red-text"> Cancelled ({{percentCancelled}}%)</span>
+                      <span class="badge badge-danger">{{numCancelled}}</span>
+                    </div>
+                    <div class="mt-2 pt-2">
+                      <mat-progress-bar mode="determinate" [value]="percentCancelled" class="red"></mat-progress-bar>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+          <!-- Row#01 -->
+          <!-- Row#02 -->
+
+
+          <!-- Row#02 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!--/Main layout-->

@@ -1,0 +1,140 @@
+<section id="loginPage">
+  <div class="container">
+    <div class="row justify-content-center" style=" height: 100vh;">
+      <div class="col-12 col-sm-6 col-lg-4">
+
+        <!--Section: Live preview-->
+        <section class=" middle-div">
+
+          <!--Card-->
+          <div class="card card-cascade wider" style="width: 28rem;">
+
+            <!--Card image-->
+            <div class="view hm-orange-light">
+              <img src="assets/images/gym.jpg" class="img-fluid">
+              <div class="mask flex-center">
+                  
+              </div>
+            </div>
+            <!--/Card image-->
+
+            <!--Card content-->
+            <div class="card-body">
+              <!--Title-->
+              <h4 class="card-title text-center">
+                <strong>Sign in</strong>
+              </h4>
+
+              <!-- Login form -->
+              <form id="login-form" form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" [class.error]="!loginForm.valid && loginForm.touched">
+                <!--Row#01-->
+                <div class="row">
+                  <!--First column-->
+                  <div class="col-md-12">
+                    <div class="md-form">
+                      <i class="fas fa-user prefix grey-text"></i>
+                      <input mdbInputDirective [mdbValidate]="false" type="text" id="user_login_id" class="form-control mb-0"  [formControl]="loginForm.controls['user_login_id']">
+                      <label for="user_login_id">Your LoginID</label>
+
+                       <!-- *********************  form validation  messages ********************* -->
+                        <div class="animated flash" *ngIf="user_login_id.hasError('required')  && user_login_id.touched">
+                          <small class="red-text fnt-sz-065 ml-2 pl-4">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="animated fadeIn" *ngIf="!user_login_id.valid && !user_login_id.touched">
+                          <small class="grey-text fnt-sz-065 ml-2 pl-4">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter Login ID</small>
+                        </div>
+                      <!-- *********************  form validation  messages ********************* -->
+
+                    </div>
+
+                  </div>
+                </div>
+                <!--Row#01-->
+                <!--Row#02-->
+                <div class="row">
+                  <!--First column-->
+                  <div class="col-md-12">
+                    <div class="md-form">
+                      <i class="fas fa-lock  prefix grey-text"></i>
+                      <input mdbInputDirective [mdbValidate]="false" type="password" id="user_password" class="form-control mb-0" [formControl]="loginForm.controls['user_password']">
+                      <label for="user_password">Your Password</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="animated flash" *ngIf="user_password.hasError('required')  && user_password.touched">
+                          <small class="red-text fnt-sz-065 ml-2 pl-4">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="animated fadeIn" *ngIf="!user_password.valid && !user_password.touched">
+                          <small class="grey-text fnt-sz-065 ml-2 pl-4">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter Password</small>
+                        </div>
+                      <!-- *********************  form validation  messages ********************* -->
+
+
+                    </div>
+
+                  </div>
+                </div>
+                <!--Row#02-->
+                <div class="text-center" *ngIf="showLoginButton">
+                  <button  type="submit" class="btn btn-outline-default btn-rounded" mdbRippleRadius >Login <i class="fas fa-sign-in-alt ml-1"></i></button>
+                  <p style="text-align:right;">mobifit v0.2</p>
+                </div>
+                
+                <div class="text-center" *ngIf="showProgressBar">
+                  <app-me-gym-linear-loader></app-me-gym-linear-loader>
+                </div>
+
+                
+               
+              </form>
+              <!-- Login form -->
+              
+            </div>
+            <!--/.Card content-->
+
+          </div>
+          <!--/.Card-->
+
+        </section>
+        <!--Section: Live preview-->
+
+        <div>
+          <simple-notifications [options]="options"></simple-notifications>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-6">
+
+        <!-- Login form -->
+        <!-- <form>
+          <p class="h5 text-center mb-4">Sign in</p>
+
+          <div class="md-form">
+            <i class="fa fa-envelope prefix grey-text"></i>
+            <input type="text" id="defaultForm-email" class="form-control" mdbActive>
+            <label for="defaultForm-email">Your email</label>
+          </div>
+
+          <div class="md-form">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="defaultForm-pass" class="form-control" mdbActive>
+            <label for="defaultForm-pass">Your password</label>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-default waves-light" mdbRippleRadius>Login</button>
+          </div>
+        </form> -->
+        <!-- Login form -->
+      <!-- </div>
+    </div> -->
+
+  </div>
+
+</section>

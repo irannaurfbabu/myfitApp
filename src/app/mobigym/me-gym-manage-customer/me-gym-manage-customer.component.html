@@ -1,0 +1,283 @@
+<!--Double navigation-->
+<header>
+  <app-me-gym-navigation></app-me-gym-navigation>
+</header>
+<!--/.Double navigation-->
+
+<!--Main Layout-->
+<main class="">
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-12">
+        <!--Panel-->
+        <div class="card">
+          <!-- card header -->
+          <div class="d-flex align-items-center primary-color card-header m-0 p-0">
+            <div class="col-5">
+              <h4 class="white-text">
+                <i class="fas fa-cubes fa-fw fa-1x"></i> Manage Customer
+
+              </h4>
+            </div>
+            <div class="col-5">
+              <!-- ********** Search Bar **********  -->
+              <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here"
+                [showUnderline]="true" (searchDebounce)="search($event)" flex>
+
+              </td-search-box>
+              <!-- ********** Search Bar **********  -->
+            </div>
+            <div class="col-2">
+              <a class="btn btn-outline-default btn-rounded btn-sm float-right " mdbRippleRadius [routerLink]="['/createcustomer']">
+                <span class="white-text">Add</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- card body -->
+          <!-- card body -->
+          <div class="card-body mt-0 pt-0 min-height-200">
+            <div class="row">
+              <!-- ********** Show Progress Bar **********  -->
+              <div class="col-12 mt-3" *ngIf="showProgressBar">
+                <app-me-gym-linear-loader> </app-me-gym-linear-loader>
+              </div>
+              <!-- ********** Show Progress Bar **********  -->
+              <!-- ********** Show Table **********  -->
+              <div class="col-12" *ngIf="!showProgressBar">
+                <div class="d-flex mt-2">
+                  <div class="col-12">
+                    <td-data-table #dataTable [data]="filteredData" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+                      [sortOrder]="sortOrder" (sortChange)="sort($event)" [style.height.px]="450" style="font-size: 1rem; font-weight:450 !important">
+                      <ng-template tdDataTableTemplate="active" let-value="value">
+                        <span *ngIf="value == 'Y'" class="badge badge-success">Active</span>
+                        <span *ngIf="value != 'Y'" class="badge badge-danger">InActive</span>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="active_packs" let-value="value" let-row="row">
+                        <a (click)="getActivePacks(row['customer_number'])" (click)="basicModal.show()">
+                          <span *ngIf="value > '0'" class="badge badge-primary pl-2 pr-2 pt-1 pb-1">{{value}}</span>
+                          <span *ngIf="value == '0'" class="badge badge-danger pl-2 pr-2 pt-1 pb-1">{{value}}</span>
+                        </a>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="customer_number" let-value="value" let-row="row" let-column="column">
+                        <a class="btn-flat center-align fnt-sz-120" [matMenuTriggerFor]="menu">
+                          <!-- <i class="material-icons">toc</i> -->
+                          <i class="fas fa-gears fa-3x darkPrimaryText me-text-shawdow " style="font-size: 1.2rem !important"></i>
+                        </a>
+                        <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+
+                          <a [routerLink]="['/editcustomer',value]" mat-menu-item>
+                            <i class="fas fa-pencil-alt fa-fw darkPrimaryText"></i>
+                            <span class="darkPrimaryText"> Edit Customer</span>
+                          </a>
+
+                          <mat-divider></mat-divider>
+                          <!-- <a [routerLink]="['/collectPayment',value]" mat-menu-item >
+                                <i class="fas fa-rupee-sign fa-fw darkPrimaryText"></i>
+                                <span class="darkPrimaryText"> Renew Subscription</span>
+                              </a>   -->
+
+                          <a *ngIf="row['Bal'] < 0" [routerLink]="['/addBalanRvrsl',value]" mat-menu-item>
+                            <i class="fas fa-rupee-sign fa-fw darkPrimaryText "></i>
+                            <span class="darkPrimaryText">Collect Dues</span>
+                          </a>
+                          <a [routerLink]="['/addComplain',value]" mat-menu-item>
+                            <i class="far fa-comments darkPrimaryText"></i>
+                            <span class="darkPrimaryText">Add Complaint</span>
+                          </a>
+                          <a (click)="getPaymentHistory(row['customer_number'])" (click)="paymentHistoryModal.show()" mat-menu-item>
+                            <i class="fa fa-book" aria-hidden="true"></i>
+                            <span class="darkPrimaryText"> Payment History</span>
+                          </a>
+                          <a (click)="extendService.show()" mat-menu-item >
+                              <i class="fa fa-book" aria-hidden="true"></i>
+                            <span class="darkPrimaryText"> Extend Membership</span>
+                          </a>
+                          <!-- <a [routerLink]="['/addBalanRvrsl',value]" mat-menu-item >
+                                  <i class="fas fa-rupee-sign fa-fw darkPrimaryText"></i>
+                                  <span class="darkPrimaryText"> Make Reversal</span>
+                                </a> -->
+
+
+
+                        </mat-menu>
+                      </ng-template>
+
+                    </td-data-table>
+                    <div class="d-flex justify-content-end">
+                      <div class="col-6">
+                        <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+                          <span hide-xs>Rows per page:</span>
+                          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+                            <mat-option *ngFor="let size of [50,100,500]" [value]="size">
+                              {{size}}
+                            </mat-option>
+                          </mat-select>
+                          {{pagingBar.range}}
+                          <span hide-xs>of {{pagingBar.total}}</span>
+                        </td-paging-bar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- ********** Show Table **********  -->
+
+              <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="basicModal.show()" mdbWavesEffect>Launch demo modal</button> -->
+
+              <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header primary-color white-text">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel">Active Subscription Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped table-hover z-depth-1 ">
+                            <thead>
+                              <tr>
+                                <th class="font-weight-500">#</th>
+                                <th class="font-weight-500">Customer Name</th>
+                                <th class="font-weight-500">Pack Name</th>
+                                <th class="font-weight-500">Pack Price</th>
+                                <th class="font-weight-500">Expiry Date</th>
+                                <th class="font-weight-500">Days Left</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="_activePacks.length == 0">
+                                <td colspan="8" class="text-center">
+                                  <div>
+                                    <span class=" badge me-status-chip red lighten-1">No Records</span>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr *ngFor="let customer of _activePacks let i=index">
+                                <th class="font-weight-400" scope="row">{{i + 1}}</th>
+                                <td class="font-weight-400">{{customer.customer_name}}</td>
+                                <td class="font-weight-400">{{customer.pack_name}}</td>
+                                <td class="font-weight-400">{{customer.total_amount}}</td>
+                                <td class="font-weight-400">{{customer.pack_expiry_date | date : 'mediumDate'}}</td>
+                                <td class="font-weight-400">{{customer.expiringIn}}</td>
+                                
+        
+        
+        
+                              </tr>
+        
+        
+                            </tbody>
+                          </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="waves-light btn btn-outline-default btn-rounded btn-sm waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="overflow: auto" mdbModal #paymentHistoryModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header primary-color white-text">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="paymentHistoryModal.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel">Payment History</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped table-hover z-depth-1 ">
+                            <thead>
+                              <tr>
+                                <th class="font-weight-500">#</th>
+                                <th class="font-weight-500">Payment Date</th>
+                                <th class="font-weight-500">Month</th>
+                                <th class="font-weight-500">Amount(Rs)</th>
+                                <th class="font-weight-500">Mode of Payment</th>
+                                <th class="font-weight-500">Collected By</th>
+                                <th class="font-weight-500">Remarks</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="_paymentHistory.length == 0">
+                                <td colspan="8" class="text-center">
+                                  <div>
+                                    <span class=" badge me-status-chip red lighten-1">No Records</span>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr *ngFor="let customer of _paymentHistory let i=index">
+                                <th class="font-weight-400" scope="row">{{i + 1}}</th>
+                                <td class="font-weight-400">{{customer.tran_date | date : 'mediumDate'}}</td>
+                                <td class="font-weight-400">{{customer.MONTH}}</td>
+                                <td class="font-weight-400">{{customer.tran_amount}}</td>
+                                <td class="font-weight-400">{{customer.payment_mode}}</td>
+                                <td class="font-weight-400">{{customer.created_by}}</td>
+                                <td class="font-weight-400">{{customer.tran_remarks}}</td>
+                                
+        
+        
+        
+                              </tr>
+        
+        
+                            </tbody>
+                          </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="waves-light btn btn-outline-default btn-rounded btn-sm waves-light" aria-label="Close" (click)="paymentHistoryModal.hide()" mdbWavesEffect>Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div mdbModal #extendService="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header primary-color white-text">
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="extendService.hide()">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title w-100" id="myModalLabel">Extend Service Period</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="waves-light btn btn-outline-default btn-rounded btn-sm waves-light" aria-label="Close" (click)="extendService.hide()" mdbWavesEffect>Close</button>
+                        <button type="button" class="waves-light btn btn-outline-default btn-rounded btn-sm waves-light" aria-label="Save" (click)="extendService()" mdbWavesEffect>Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- ********** Show No Records **********  -->
+              <div class="col-12 animate fadeIn" *ngIf="showNoRecords">
+                <blockquote class="blockquote bq-danger m-1 p-1">
+                  <p class="bq-title m-0 p-0">
+                    <i class="far fa-times-circle fa-fw fa-1x"></i> Error</p>
+                  <p class=" m-1 p-1 red-text">
+                    <span class="badge badge-danger">No Records</span>
+                    <span class="ml-1">There are no records for this owner.</span>
+                  </p>
+                </blockquote>
+              </div>
+              <!-- ********** Show No Records**********  -->
+
+            </div>
+          </div>
+          <!-- card body -->
+
+
+        </div>
+
+        <!--/.Panel-->
+
+      </div>
+    </div>
+  </div>
+</main>
+<!--/Main layout-->

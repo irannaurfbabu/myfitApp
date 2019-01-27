@@ -1,0 +1,315 @@
+<!--Double navigation-->
+<app-me-gym-navigation></app-me-gym-navigation>
+<!--/.Double navigation-->
+
+
+<!--Main Layout ~ Start-->
+<main class="mt-1 pt-1">
+  <!--Container ~ Start-->
+  <div class="container-fluid ">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-10">
+        <!--Panel-->
+        <form [formGroup]="createExpense" (ngSubmit)="onSubmit(createExpense.value)" [class.error]="!createExpense.valid && createExpense.touched">
+          <div class="card">
+            <h5 class="card-header primary-color white-text">
+              <i class="fas fa-plus-square  fa-fw"></i> Add Expense</h5>
+            <!-- Card Body ~ Start -->
+            <div class="card-body">
+              <!-- Row#01 -->
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i> Expense Details</h5>
+                  <div class="divider mb-2"></div>
+                </div>
+              </div>
+              <!-- Row#01 -->
+              <div class="row">
+                <!-- Row#01Col#01 -->
+                <div class="col-8">
+                  <!-- Col#01-Row#01 -->
+                  <div class="row">
+                    <!-- <div class="col-4">
+                      <div class="md-form font-weight-600">
+                        <input mdbInputDirective [mdbValidate]="false" type="text" id="expense_title" class="form-control mb-0" app-restrict-input="alphanumeric" [formControl]="createExpense.controls['expense_title']"
+                          required maxlength="50" mdbActive>
+                        <label for="expense_title">Expense Title</label> -->
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="animated flash" *ngIf="expense_title.hasError('required')  && expense_title.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="animated fadeIn" *ngIf="!expense_title.valid && !expense_title.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter expense title</small>
+                        </div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+
+                    <!-- </div>
+                    </div> -->
+                    <div class="col-4 mt-4">
+                      <div class="font-weight-600">
+                        <mdb-select [options]="_expenseCategorySelect" placeholder="Select Option" [formControl]="createExpense.controls['expense_category']"
+                          id="expense_category" class="colorful-select dropdown-primary"></mdb-select>
+                        <label for="expense_category">Expense Category</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="me-required-text left animated flash" *ngIf="expense_category.hasError('required') && expense_category.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="me-helper-text left animated fadeIn" *ngIf="!expense_category.valid && !expense_category.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Select Category</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                    <div class="col-4 mt-4">
+                      <div class="font-weight-600">
+                        <mdb-select [options]="_expenseSubCategorySelect" placeholder="Select Option" [formControl]="createExpense.controls['expense_subcategory']"
+                          id="expense_category" class="colorful-select dropdown-primary"></mdb-select>
+                        <label for="expense_category">Expense Sub-Category</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="me-required-text left animated flash" *ngIf="expense_subcategory.hasError('required') && expense_subcategory.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="me-helper-text left animated fadeIn" *ngIf="!expense_subcategory.valid && !expense_subcategory.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Select Sub-Category</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                    <div class="col-4 mt-3">
+                      <div class="">
+                        <mat-form-field class="font-weight-600">
+                          <input matInput [matDatepicker]="expense_date" placeholder="Expense Date" [formControl]="createExpense.controls['expense_date']"
+                            [readonly]="true">
+                          <mat-datepicker-toggle matSuffix [for]="expense_date"></mat-datepicker-toggle>
+                          <mat-datepicker #expense_date touchUi="true"></mat-datepicker>
+                        </mat-form-field>
+                        <div class="me-helper-text left animated fadeIn" style="margin-top: -20px">
+                            <small class="grey-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-info-circle fa-fw"></i>Select Expense Date</small>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Col#01-Row#02 -->
+                  <div>
+                    <div class="row">
+
+
+                      <!-- *********************  form validation  messages ********************* -->
+                      <!-- <div class="me-required-text left animated flash" *ngIf="expense_date.hasError('required') && expense_date.touched">
+                            <small class="red-text fnt-sz-065">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div> -->
+                      <!--  -->
+                      <!-- *********************  form validation  messages ********************* -->
+
+
+                      <div class="col-4 mt-4">
+                        <div class="font-weight-600">
+                          <mdb-select [options]="_expensePriceTypeSelect" placeholder="Select Option" [formControl]="createExpense.controls['expense_price_type']"
+                            mdbActive id="durationType" class="colorful-select dropdown-primary"></mdb-select>
+                          <label for="durationType">Price Type</label>
+
+                          <!-- *********************  form validation  messages ********************* -->
+                          <div class="me-required-text left animated flash" *ngIf="expense_price_type.hasError('required') && expense_price_type.touched">
+                            <small class="red-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div>
+                          <div class="me-helper-text left animated fadeIn" *ngIf="!expense_price_type.valid && !expense_price_type.touched">
+                            <small class="grey-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-info-circle fa-fw"></i>Select price type</small>
+                          </div>
+                          <!-- *********************  form validation  messages ********************* -->
+
+                        </div>
+                      </div>
+
+                      <div class="col-3">
+                        <div class="md-form font-weight-600">
+                          <input mdbInputDirective [mdbValidate]="false" type="number" id="amount" class="form-control mb-0" [formControl]="createExpense.controls['expense_amount']">
+                          <label for="amount">Amount</label>
+                          <!-- *********************  form validation  messages ********************* -->
+                          <div class="me-required-text left animated flash" *ngIf="expense_amount.hasError('required') && expense_amount.touched">
+                            <small class="red-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div>
+
+                          <div class="me-helper-text left animated fadeIn" *ngIf="!expense_amount.valid && !expense_amount.touched">
+                              <small class="grey-text fnt-sz-065">
+                                <i class="fa fa-info-circle fa-fw"></i>Enter Amount</small>
+                            </div>
+
+                          <!-- *********************  form validation  messages ********************* -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Col#01-Row#03 -->
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="md-form font-weight-600">
+                        <input mdbInputDirective [mdbValidate]="false" type="text" id="expense_description" class="form-control mb-0" [formControl]="createExpense.controls['expense_description']"
+                          maxlength="150" mdbActive>
+                        <label for="expense_description">Expense Description</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <!-- <div class="animated flash" *ngIf="expense_description.hasError('required')  && expense_description.touched">
+                            <small class="red-text fnt-sz-065">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div> -->
+                        <div class="animated fadeIn" *ngIf="true">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter expense description(optional)</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <!-- Row#01Col#02 -->
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="z-depth-2  animate fadeIn  border-radius-5">
+                        <div class="list-group ">
+                          <li class="list-group-item primary-color white-text font-weight-500">
+                            <i class="fas fa-money-bill-alt  fa-fw"></i> Expense Price Details
+                          </li>
+                          <li class="list-group-item  font-weight-500">Base Price
+                            <span class="float-right">{{displaybase_price | number : '1.2-2'}}</span>
+                          </li>
+                          <div *ngIf="!nonTaxable">
+                            <div *ngIf="gstSelected">
+                              <li class="list-group-item  font-weight-500">CGST
+                                <small class=" font-weight-300">({{gstAmount / 2}} %)</small>
+                                <span class="float-right">{{displaycgst | number : '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item  font-weight-500">SGST
+                                <small class=" font-weight-300">({{gstAmount / 2}} %)</small>
+                                <span class="float-right">{{displaygst | number : '1.2-2'}}</span>
+                              </li>
+
+                            </div>
+                            <div *ngIf="igstSelected">
+                              <li class="list-group-item  font-weight-500">IGST
+                                <small class=" font-weight-300">({{gstAmount}} %)</small>
+                                <span class="float-right">{{displayigst | number : '1.2-2'}}</span>
+                              </li>
+
+                            </div>
+                          </div>
+                          <li class="list-group-item  font-weight-500">Total Tax
+                            <small class=" font-weight-300">({{gstAmount}} %)</small>
+                            <span class="float-right">{{displaytotal_tax | number : '1.2-2'}}</span>
+                          </li>
+                          <li class="list-group-item font-weight-500 grey lighten-3">Total Amount
+                            <span class="float-right font-weight-500">{{displaytotal | number : '1.2-2'}}</span>
+                          </li>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              <!-- Row#02 -->
+              <div class="row">
+                <div class="col-10">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>
+                    Expense Summary</h5>
+                  <div class="divider mb-2"></div>
+                  <!--Table-->
+                  <table class="table z-depth-2  border-radius-5">
+
+                    <!--Table head-->
+                    <thead class="primary-color  border-radius-5">
+                      <tr class="text-white  border-radius-5">
+                        <th>Expense Category</th>
+                        <th>Expense Sub-Category</th>
+                        <th>Expense Date</th>
+                        <th>Total Amount</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody>
+
+                      <tr>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayCategory}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displaySubCategory}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayExpenseDate | date:' LLL d, y, h:mm:ss a' }}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge blue">{{displaytotal | number : '1.2-2' }}</span>
+                          </h5>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <!--Table-->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <!-- ******************* Form Submit Bar ~ Start ******************* -->
+                  <div class="divider mt-3"></div>
+                  <div class="d-flex justify-content-end mt-1">
+                    <a [routerLink]="['/manageexpense']">
+                      <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                    </a>
+                    <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                  </div>
+
+                  <!-- ******************* Form Submit Bar ~ End ******************* -->
+                </div>
+              </div>
+
+            </div>
+            <!-- Card Body ~ End -->
+          </div>
+        </form>
+        <!--/.Panel-->
+      </div>
+    </div>
+  </div>
+  <!--Container ~ End-->
+</main>
+<!--Main Layout ~ End-->

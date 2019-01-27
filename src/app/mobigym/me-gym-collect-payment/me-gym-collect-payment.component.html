@@ -1,0 +1,342 @@
+<!--Double navigation-->
+<app-me-gym-navigation></app-me-gym-navigation>
+<!--/.Double navigation-->
+
+<main class="pt-1">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <!--Grid column-->
+          <div class="col-6">
+
+            <!--Card-->
+            <div class="card testimonial-card">
+
+              <!--Bacground color-->
+              <div class="card-up  primary-color white-text">
+              </div>
+
+              <!--Avatar-->
+              <div class="avatar mx-auto">
+                <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle"> -->
+                <img src="assets/images/man-18.svg" class="rounded-circle white">
+              </div>
+
+              <div class="card-body">
+                <!--Name-->
+                <h4 class="card-title font-weight-500">{{displayCustomerName}}</h4>
+                <hr>
+                <div class="d-flex justify-content-start">
+                  <div class="col-6 text-left">
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-id-badge fa-fw grey-text"></i>
+                      </span>{{displayCustomerID}}
+                    </p>
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-phone-square fa-fw grey-text"></i>
+                      </span> {{displayPhone}}
+                    </p>
+                    <small class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-map-marker-alt fa-fw grey-text"></i>
+                      </span>{{displayAddress}}
+                    </small>
+                  </div>
+                  <div class="col-6 text-left">
+                    <p *ngIf="this.isActive">
+                      <span class="badge badge-success">{{displayCustomerStatus}}</span>
+                    </p>
+                    <p *ngIf="this.isInactive">
+                      <span class="badge badge-danger">{{displayCustomerStatus}}</span>
+                    </p>
+                    <p *ngIf="!this.isInactive && !this.isActive">
+                      <span class="badge grey">{{displayCustomerStatus}}</span>
+                    </p>
+                    <p class="mb-0 pb-0">
+                        <span>
+                          <strong>Available Balance:</strong> <i class="fas fa-rupee-sign mr-2 ml-2"></i>
+                        </span><span class="badge badge-primary badge-pill">{{this.displayOldAvlBalance | number : '1.2-2'  }}</span>
+                      </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!--/.Card-->
+
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2">
+          <div class="col-8">
+            <!--Table-->
+            <table class="table z-depth-1">
+
+              <!--Table head-->
+              <thead class="primary-color white-text">
+                <tr>
+                  <th class="font-weight-500">#</th>
+                  <th class="font-weight-500">Subscription Name</th>
+                  <th class="font-weight-500">Subscription Price</th>
+                  <th class="font-weight-500">Start Date</th>
+                  <th class="font-weight-500">End Date</th>
+                  <th class="font-weight-500">Expiring In</th>
+                  <!-- <th class="font-weight-500">Status</th> -->
+                </tr>
+              </thead>
+              <!--Table head-->
+
+              <!--Table body-->
+              <tbody>
+                <tr *ngFor="let pack of _customerPacksObj let i = index">
+                  <td>
+                    <span>
+                      <strong>{{i+1}}</strong>
+                    </span>
+                  </td>
+                  <td class="font-weight-500">
+                    <span class="fnt-sz-110">{{pack.pack_name}}</span>
+                  </td>
+                  <td class="font-weight-500">
+                    <span class="fnt-sz-110">{{pack.total_amount}}</span>
+                  </td>
+                  <td>
+                    <span class="badge grey">{{pack.pack_activation_date | date: 'mediumDate'}}</span>
+                  </td>
+                  <td>
+                    <span class="badge grey">{{this.oldPackExpiryDate | date: 'mediumDate'}}</span>
+                  </td>
+                  <td>
+                      <span class="badge orange">{{this.expiringIn}}</span>
+
+                      </td>
+                  <!-- <td>
+                      <span class="badge red">InActive</span>
+                    </td> -->
+                </tr>
+                <!-- <tr>
+                  <th scope="row">2</th>
+                  <td><span class="fnt-sz-110">Karate Classes</span></td>
+                  <td><span class="fnt-sz-110">450.00</span></td>
+                  <td><span class="badge grey">01-Feb-2018</span></td>
+                  <td><span class="badge grey">31-Mar-2018</span></td>
+                  <td>10 days</td>
+                </tr> -->
+
+                <tr>
+                  <td colspan="4" class="blue-grey lighten-4"></td>
+                  <td>
+                    <span class="fnt-sz-125 font-weight-500 teal-text">
+                      <i class="fas fa-cart-plus"></i>
+                      Total</span>
+                  </td>
+                  <td>
+                    <span class="fnt-sz-125 font-weight-500">{{total_amount}}</span>
+                  </td>
+                </tr>
+
+              </tbody>
+              <!--Table body-->
+            </table>
+            <!--Table-->
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2">
+          <!--Grid column-->
+          <div class="col-8">
+            <!--Panel-->
+            <div class="card">
+              <h3 class="card-header primary-color white-text">Renew Subscription</h3>
+              <div class="card-body">
+                <form [formGroup]="addBalancRvrsl" (ngSubmit)="onSubmit(addBalancRvrsl.value)" [class.error]="!addBalancRvrsl.valid && addBalancRvrsl.touched">
+                  <div class="row">
+
+                    <div class="col-12" *ngIf="false">
+                      <!-- <p class="p-3 red-text  red lighten-5 animated" [ngClass]="{'red  zoomIn': this.isInactive, 'grey zoomOut': !this.isInactive  }" >
+                             Form is disabled from editing since the pack status is <span class="badge red">Inactive</span>. Set the pack status to 
+                             <span class="badge green">Active</span> to enable editing.
+                          </p> -->
+                      <div class="alert alert-warning animated" role="alert" [ngClass]="{'zoomIn': this.displayWarning, 'zoomOut': !this.displayWarning  }">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Amount should be greater than or equal to : {{this.total_amount}}
+                      </div>
+                    </div>
+
+                    <!-- input columns - Start   -->
+                    <div class="col-7">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="md-form font-weight-500">
+                            <input mdbInputDirective [mdbValidate]="false" type="number" id="amount" class="form-control mb-0" app-restrict-input="alphanumeric" [formControl]="addBalancRvrsl.controls['amount']"
+                              required maxlength="5" [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }">
+                            <label for="amount">Amount</label>
+
+                            <!-- *********************  form validation  messages ********************* -->
+                            <div class="animated flash" *ngIf="amount.hasError('required')  && amount.touched">
+                              <small class="red-text fnt-sz-065 font-weight-500">
+                                <i class="fa fa-warning fa-fw"></i>Required</small>
+                            </div>
+                            <div class="animated fadeIn" *ngIf="!amount.valid && !amount.touched">
+                              <small class="grey-text fnt-sz-065 font-weight-500">
+                                <i class="fa fa-info-circle fa-fw"></i>Enter Amount</small>
+                            </div>
+                            <!-- *********************  form validation  messages ********************* -->
+
+                          </div>
+                        </div>
+                        <!-- <div class="col-3">
+                            <div class="md-form">
+                              <mat-form-field>
+                                <input matInput [min]="minDate" [max]="maxDate" placeholder="Renewal Date" [matDatepicker]="picker" [readonly]="true"
+                                  id="activation"  class="mb-0"[formControl]="addBalancRvrsl.controls['renewal_date']">
+
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker [disabled]="false"></mat-datepicker>
+                              </mat-form-field> -->
+
+                              <!-- *********************  form validation  messages ********************* -->
+
+                              <!-- <div class="animated flash" style=" margin-top: -20px; ">
+                                <small class="grey-text fnt-sz-065">
+                                  <i class="fa fa-info-circle fa-fw"></i>Renewal Date</small>
+                              </div> -->
+                              <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                              <!-- *********************  form validation  messages ********************* -->
+                            <!-- </div>
+                          </div> -->
+
+                      </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <div class="md-form font-weight-500">
+                            <input mdbInputDirective [mdbValidate]="false" type="text" id="remarks" class="form-control mb-0" app-restrict-input="alphanumeric" [formControl]="addBalancRvrsl.controls['remarks']"
+                              maxlength="50" [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }">
+                            <label for="remarks">Remarks</label>
+
+                            <!-- *********************  form validation  messages ********************* -->
+
+                            <div class="animated fadeIn" *ngIf="!remarks.valid && !remarks.touched">
+                              <small class="grey-text fnt-sz-065 font-weight-500">
+                                <i class="fa fa-info-circle fa-fw"></i>Enter remaks(optional)</small>
+                            </div>
+                            <!-- *********************  form validation  messages ********************* -->
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- input columns - End   -->
+                    <div class="col-5">
+                      <!--Panel-->
+                      <div class="card">
+                        <h4 class="card-header primary-color white-text">Renewal Details</h4>
+                        <div class="card-body p-0">
+                          <ul class="list-group">
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                  Total Amount
+                                  <span class="badge badge-primary badge-pill">{{this.total_amount | number : '1.2-2'  }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                  Available Balance
+                                  <span class="badge badge-primary badge-pill">{{this.displayOldAvlBalance | number : '1.2-2'  }}</span>
+                                </li>
+                              
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Renewal Amount
+                              <span class="badge badge-primary badge-pill">{{this.showRenewal  | number : '1.2-2' }} </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Received Amount
+                              <span class="badge badge-primary badge-pill">{{this.displayRecievedAmount | number : '1.2-2' }}</span>
+                            </li>
+                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center grey lighten-3">
+                              Outstanding Balance
+                              <span class="badge badge-primary badge-pill">{{this.displayOutstandingBalance | number : '1.2-2' }}</span>
+                            </li> -->
+
+                          </ul>
+
+                        </div>
+                      </div>
+                      <!--/.Panel-->
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <h5 class="me-subheader">
+                        <i class="fa fa-dot-circle-o fa-fw"></i>Renewal Details</h5>
+                      <div class="divider mb-2 primary-color"></div>
+                    </div>
+                  </div>
+    
+    
+                  <div class="d-flex justify-content-center mt-2">
+                    <div class="col-12">
+                      <!--Table-->
+                      <table class="table table-sm">
+
+                        <!--Table head-->
+                        <thead>
+                          <tr>
+                            <th class="font-weight-500">New Start Date</th>
+                            <th class="font-weight-500">New Expiry Date</th>
+                            <th class="font-weight-500">Balance Remarks</th>
+                            <th class="font-weight-500">Closing Balance <i class="fas fa-rupee-sign ml-1"></i></th>
+                          </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span class="badge grey">{{this.renewalDate | date: 'mediumDate'}}</span>
+                            </td>
+                            <td>
+                              <span class="badge grey">{{this.packExpiryDate | date: 'mediumDate'}}</span>
+                            </td>
+                            <td>
+                              <span class="badge {{this.badgeColor}}">{{displayRemarks}}</span>
+                            </td>
+                            <td>
+                              <span class="badge {{this.badgeColor}} ml-10">{{this.displayOutstandingBalance}}</span>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                        <!--Table body-->
+                      </table>
+                      <!--Table-->
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <!-- ******************* Form Submit Bar ~ Start ******************* -->
+                      <div class="divider mt-3"></div>
+                      <div class="d-flex justify-content-end mt-1">
+                        <a [routerLink]="['/managecustomer']">
+                          <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                        </a>
+                        <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                      </div>
+
+                      <!-- ******************* Form Submit Bar ~ End ******************* -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!--/.Panel-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

@@ -1,0 +1,138 @@
+<!--Double navigation-->
+<header>
+  <app-me-gym-navigation></app-me-gym-navigation>
+</header>
+<!--/.Double navigation-->
+
+<!--Main Layout-->
+<main class="">
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-12">
+
+        <form [formGroup]="dueReport" (ngSubmit)="onSubmit(dueReport.value)" [class.error]="!dueReport.valid && dueReport.touched">
+          <div class="card">
+            <div class="card-header primary-color white-text">
+              <i class="fas fa-user-plus fa-fw fa-1x"></i> Customers Due Report
+            </div>
+            <div class="card-body">
+              <div class="row mt-3">
+                <div class="col-3">
+                  <mdb-select [options]="optionsSelect" placeholder="Choose your option" [formControl]="dueReport.controls['dateRange']"></mdb-select>
+                  <label>Date Range</label>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <input matInput placeholder="From Date" [matDatepicker]="picker1" [readonly]="true" id="fromDate" class="mb-0" [formControl]="dueReport.controls['fromDate']">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #picker1 [disabled]="custom"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <mat-form-field>
+                    <input matInput placeholder="To Date" [matDatepicker]="picker2" [readonly]="true" id="toDate" class="mb-0" [formControl]="dueReport.controls['toDate']">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #picker2 [disabled]="custom"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-3">
+                  <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>SEARCH</button>
+                  <button type="button" (click)="exportReport()" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>EXPORT</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--Panel-->
+        <div class="card mt-2">
+          <div class="d-flex align-items-center m-0 p-0">
+            <div class="col-6">
+              <h4 class="white-text">
+                <i class="fas fa-cubes fa-fw fa-1x"></i> Search Report
+
+              </h4>
+            </div>
+            <div class="col-6">
+              <!-- ********** Search Bar **********  -->
+              <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here"
+                [showUnderline]="true" (searchDebounce)="search($event)" flex>
+
+              </td-search-box>
+              <!-- ********** Search Bar **********  -->
+            </div>
+
+          </div>
+          <div class="card-body mt-0 pt-0 min-height-200">
+            <div class="row">
+              <!-- ********** Show Progress Bar **********  -->
+              <div class="col-12 mt-3" *ngIf="showProgressBar">
+                <app-me-gym-linear-loader> </app-me-gym-linear-loader>
+              </div>
+              <!-- ********** Show Progress Bar **********  -->
+              <!-- ********** Show Table **********  -->
+              <div class="col-12" *ngIf="!showProgressBar">
+
+                <!-- ********** DataTable **********  -->
+                <div class="d-flex mt-2">
+                  <div class="col-12">
+                    <td-data-table #dataTable [data]="filteredData" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+                      [clickable]="true" (rowClick)="showAlert($event)" [sortOrder]="sortOrder" (sortChange)="sort($event)"
+                      [style.height.px]="400">
+
+                      <ng-template tdDataTableTemplate="customer_number" let-value="value">
+                        <a [routerLink]="['/addBalanRvrsl', value]">
+                          <i class="fas fa-edit fa-lg teal-text text-darken-3 "></i>
+                        </a>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="due_date" let-value="value">
+                        <span> {{ value | date:' d-LLL-y'}}</span>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="days" let-value="value">
+                        <span class="badge badge-danger">{{value}} Day(s)</span>
+                      </ng-template>
+                    </td-data-table>
+                    <div class="d-flex justify-content-end">
+                      <div class="col-6">
+                        <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+                          <span hide-xs>Rows per page:</span>
+                          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+                            <mat-option *ngFor="let size of [50,100,500]" [value]="size">
+                              {{size}}
+                            </mat-option>
+                          </mat-select>
+                          {{pagingBar.range}}
+                          <span hide-xs>of {{pagingBar.total}}</span>
+                        </td-paging-bar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ********** DataTable **********  -->
+
+              </div>
+              <!-- ********** Show Table **********  -->
+              <!-- ********** Show No Records **********  -->
+              <div class="col-12 animate fadeIn" *ngIf="showNoRecords">
+                <blockquote class="blockquote bq-danger m-1 p-1">
+                  <p class="bq-title m-0 p-0">
+                    <i class="far fa-times-circle fa-fw fa-1x"></i> Error</p>
+                  <p class=" m-1 p-1 red-text">
+                    <span class="badge badge-danger">No Records</span>
+                    <span class="ml-1">There are no records for this owner.</span>
+                  </p>
+                </blockquote>
+              </div>
+              <!-- ********** Show No Records**********  -->
+
+            </div>
+          </div>
+        </div>
+        <!--/.Panel-->
+
+      </div>
+    </div>
+  </div>
+</main>
+<!--/Main layout-->

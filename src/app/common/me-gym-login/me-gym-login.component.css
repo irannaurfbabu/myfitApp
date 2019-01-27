@@ -1,0 +1,8 @@
+.middle-div {
+  position: relative;
+  top: 45%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+/*# sourceMappingURL=me-gym-login.component.css.map */

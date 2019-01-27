@@ -1,0 +1,470 @@
+<!--Double navigation-->
+<app-me-gym-navigation></app-me-gym-navigation>
+<!--/.Double navigation-->
+
+
+<!--Main Layout-->
+<main class="mt-1 pt-1">
+  <div class="container-fluid ">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-10">
+        <!--Panel-->
+        <form [formGroup]="addEmployee" (ngSubmit)="onSubmit(addEmployee.value)" [class.error]="!addEmployee.valid && addEmployee.touched">
+          <div class="card">
+            <h5 class="card-header primary-color white-text">
+              <i class="fas fa-plus-square  fa-fw"></i> Add Employee</h5>
+            <!-- Card Body ~ Start -->
+            <div class="card-body">
+              <!-- Row#01 -->
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>General Information</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+              <!-- Row#02 -->
+              <div class="row mt-1">
+                <div class="col-4">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="firstName" [formControl]="addEmployee.controls['first_name']"
+                      class="form-control mb-0" required maxlength="30">
+                    <label for="firstName">First Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="first_name.hasError('required')  && first_name.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!first_name.valid && !first_name.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter first Name</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="lastName" class="form-control mb-0" [formControl]="addEmployee.controls['last_name']">
+                    <label for="lastName">Last Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="last_name.hasError('required')  && last_name.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!last_name.valid && !last_name.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter Last Name</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3 mt-4">
+                  <div class="font-weight-600">
+                    <mdb-select [options]="_genderSelect" [formControl]="addEmployee.controls['gender']" placeholder="Select Option"></mdb-select>
+                    <label for="lastName">Gender</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="gender.hasError('required')  && gender.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!gender.valid && !gender.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter Gender</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row#03 -->
+              <div class="row mt-1">
+                <div class="col-5">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="address" class="form-control mb-0" [formControl]="addEmployee.controls['address']"
+                      required maxlength="80">
+                    <label for="address">Address</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="address.hasError('required')  && address.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!address.valid && !address.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter Address</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="email" id="email" class="form-control mb-0" [formControl]="addEmployee.controls['email']"
+                      length="20">
+                    <label for="email">Email</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="animated flash" *ngIf="email.hasError('required')  && email.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div> -->
+                    <div class="animated fadeIn" *ngIf="true">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter email (optional) </small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="phone" class="form-control mb-0" [formControl]="addEmployee.controls['phone']"
+                      required maxlength="10">
+                    <label for="phone">Phone</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash " *ngIf="phone.hasError('required')  && phone.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!phone.valid && !phone.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Phone Number</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row#04 -->
+              <div class="row">
+
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="area" [formControl]="addEmployee.controls['area']" class="form-control mb-0">
+                    <label for="area">Area</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="area.hasError('required')  && area.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!area.valid && !area.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Area</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="city" class="form-control mb-0" [formControl]="addEmployee.controls['city']"
+                      length="20">
+                    <label for="city">City</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="city.hasError('required')  && city.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!city.valid && !city.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter City</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="pincode" [formControl]="addEmployee.controls['pincode']" class="form-control mb-0"
+                      length="6">
+                    <label for="pincode">Pincode</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="pincode.hasError('required')  && pincode.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!pincode.valid && !pincode.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Pincode</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="alt_phone" [formControl]="addEmployee.controls['alt_phone']"
+                      class="form-control mb-0" length="6">
+                    <label for="alt_phone">Alternate Phone</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="animated flash" *ngIf="alt_phone.hasError('required')  && alt_phone.touched">
+                          <small class="red-text fnt-sz-065">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div> -->
+                    <div class="animated fadeIn" *ngIf="true">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter contact phone (optional)</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+
+
+              </div>
+
+              <!-- Row#05 -->
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>Additional Information</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+
+              <!-- Row#06 -->
+              <div class="row">
+                <div class="col-4 mt-4">
+                  <div class="font-weight-600">
+                    <mdb-select [options]="_roleSelect" placeholder="Select Option" [formControl]="addEmployee.controls['job_role']" id="role"
+                      class="colorful-select dropdown-primary"></mdb-select>
+                    <label for="role">Role</label>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="me-required-text left animated flash" *ngIf="job_role.hasError('required') && job_role.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="me-helper-text left animated fadeIn" *ngIf="!job_role.valid && !job_role.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Select Role</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="md-form">
+                    <mat-form-field class="font-weight-600">
+                      <input matInput [matDatepicker]="joining_date" placeholder="Choose Joining date" [formControl]="addEmployee.controls['joining_date']"
+                        [readonly]="true">
+                      <mat-datepicker-toggle matSuffix [for]="joining_date"></mat-datepicker-toggle>
+                      <mat-datepicker #joining_date touchUi="true"></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="me-required-text left animated flash" *ngIf="expense_date.hasError('required') && expense_date.touched">
+                            <small class="red-text fnt-sz-065">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div> -->
+                    <!-- <div class="me-helper-text left animated fadeIn" *ngIf="!expense_date.valid && !expense_date.touched">
+                            <small class="grey-text fnt-sz-065">
+                              <i class="fa fa-info-circle fa-fw"></i>Select price type</small>
+                          </div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <div class="md-form">
+                    <mat-form-field class="font-weight-600">
+                      <input matInput [matDatepicker]="birth_date" placeholder="Select Date of Birth" [formControl]="addEmployee.controls['birth_date']"
+                        [readonly]="true">
+                      <mat-datepicker-toggle matSuffix [for]="birth_date"></mat-datepicker-toggle>
+                      <mat-datepicker #birth_date touchUi="true"></mat-datepicker>
+                    </mat-form-field>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                    <div class="animated fadeIn" style="margin-top: -20px">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Date of Birth</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+
+
+
+
+              </div>
+              <div class="row">
+                <div class="col-2 mt-4">
+                  <div class="font-weight-600">
+                    <mdb-select [options]="_relationshipType" placeholder="Select Option" [formControl]="addEmployee.controls['relationship']"
+                      id="role" class="colorful-select dropdown-primary"></mdb-select>
+                    <label for="role">Relationship</label>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="me-required-text left animated flash" *ngIf="job_role.hasError('required') && job_role.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div> -->
+                    <div class="me-helper-text left animated fadeIn">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Select Relationship</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="econtact_name" [formControl]="addEmployee.controls['econtact_name']"
+                      class="form-control mb-0" length="6">
+                    <label for="econtact_name">Full Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="econtact_name.hasError('required')  && econtact_name.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!econtact_name.valid && !econtact_name.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency contact name </small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="econtact_number" [formControl]="addEmployee.controls['econtact_number']"
+                      class="form-control mb-0" length="6">
+                    <label for="econtact_number">Phone</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="econtact_number.hasError('required')  && econtact_number.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!econtact_number.valid && !econtact_number.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency contact number </small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="econtact_address" [formControl]="addEmployee.controls['econtact_address']"
+                      class="form-control mb-0" length="6">
+                    <label for="econtact_address">Address</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="econtact_address.hasError('required')  && econtact_address.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!econtact_address.valid && !econtact_address.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency contact Address </small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row#07 -->
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>Application Access</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+
+              <!-- Row#08 -->
+              <div class="row">
+                <div class="col-4">
+                  <p class="p-3 font-weight-600">
+                    Do you like to enable application access for this employee ?
+                  </p>
+                </div>
+                <div class="col-2">
+                  <label for="durationType" class="font-weight-500 fnt-sz-075">Enable Access</label>
+                  <div class="switch" id="enable_access">
+                    <label>
+                      <span class="badge animated" [ngClass]="{'red  fadeIn': this.isDisabled, 'grey fadeIn': !this.isDisabled  }">No</span>
+                      <input type="checkbox" [formControl]="addEmployee.controls['enable_access']" (click)="enableAccess()">
+                      <!-- <input type="checkbox" [formControl]="addEmployee.controls['enable_access']" (click)="setStatus() "> -->
+                      <span class="lever"></span>
+                      <span class="badge animated" [ngClass]="{'green fadeIn': this.isEnabled, 'grey fadeIn': !this.isEnabled }">Yes</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <p class="m-0 p-0  mt-1 font-weight-500 fnt-sz-075">Status</p>
+                  <p class="mt-1 pt-1 animated fadeIn">
+                    <span class="badge green animated fadeIn" *ngIf="this.isEnabled">Enabled</span>
+                    <span class="badge red animated fadeIn" *ngIf="!this.isEnabled">Disabled</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Row#09 -->
+              <div class="row animated fadeIn" *ngIf="showCredentials">
+                <div class="col-4">
+                  <p class="p-3 font-weight-600">
+                    Enter login id and password for application access ?
+                    <br>
+                    <small class="grey-text font-weight-600">
+                      <i class="fa fa-info-circle fa-fw"></i> Choose password wisely.</small>
+                  </p>
+
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="login_id" [formControl]="addEmployee.controls['login_id']"
+                      class="form-control mb-0" length="6">
+                    <label for="login_id">Login ID</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="login_id.hasError('required')  && login_id.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="true">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Login ID</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="password" [formControl]="addEmployee.controls['password']"
+                      class="form-control mb-0" length="6">
+                    <label for="password">Password</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="password.hasError('required')  && password.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="true">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter password</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row#10 -->
+              <div class="row">
+                <div class="col-12">
+                  <!-- ******************* Form Submit Bar ~ Start ******************* -->
+                  <div class="divider mt-3"></div>
+                  <div class="d-flex justify-content-end mt-1">
+                    <a [routerLink]="['/manageemployees']">
+                      <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                    </a>
+                    <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                  </div>
+
+                  <!-- ******************* Form Submit Bar ~ End ******************* -->
+                </div>
+              </div>
+
+            </div>
+            <!-- Card Body ~ End -->
+          </div>
+          <!--/.Panel-->
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</main>

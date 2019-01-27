@@ -1,0 +1,405 @@
+<!--Double navigation-->
+<app-me-gym-navigation></app-me-gym-navigation>
+<!--/.Double navigation-->
+
+<!--Main Layout ~ Start-->
+<main class="mt-1 pt-1">
+  <!--Container ~ Start-->
+  <div class="container-fluid ">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-10">
+        <!--Panel-->
+        <form [formGroup]="editPack" (ngSubmit)="onSubmit(editPack.value)" [class.error]="!editPack.valid && editPack.touched">
+          <div class="card">
+            <h5 class="card-header primary-color white-text font-weight-400">
+              <i class="fas fa-pencil-square-o  fa-fw"></i> Edit Pack</h5>
+            <!-- Card Body ~ Start -->
+            <div class="card-body">
+              <!-- Row#01 -->
+              <div class="row">
+                <div class="col-12" *ngIf="this.isInactive">
+                   <!-- <p class="p-3 red-text  red lighten-5 animated" [ngClass]="{'red  zoomIn': this.isInactive, 'grey zoomOut': !this.isInactive  }" >
+                      Form is disabled from editing since the pack status is <span class="badge red">Inactive</span>. Set the pack status to 
+                      <span class="badge green">Active</span> to enable editing.
+                   </p> -->
+                   <div class="alert alert-danger animated" role="alert"  [ngClass]="{'zoomIn': this.isInactive, 'zoomOut': !this.isInactive  }" >
+                    Form is disabled from editing since the pack status is <span class="badge red">Inactive</span>. Set the pack status to 
+                      <span class="badge green">Active</span> to enable editing.
+                  </div>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="me-subheader">
+                        <i class="fa fa-dot-circle-o fa-fw"></i> Pack Details</h5>
+                      <div class="divider mb-2"></div>
+                </div>
+
+                <!-- Row#01Col#01 -->
+                <div class="col-8">
+                  <!-- Col#01-Row#01 -->
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="md-form font-weight-600">
+                        <input mdbInputDirective [mdbValidate]="false" type="text" id="packName" class="form-control mb-0" app-restrict-input="alphanumeric" 
+                          [formControl]="editPack.controls['pack_name']"
+                          required maxlength="50" [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }"  >
+                        <label for="packName">Pack Name</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="animated flash" *ngIf="pack_name.hasError('required')  && pack_name.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="animated fadeIn" *ngIf="!pack_name.valid && !pack_name.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter Pack Name</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                    <div class="col-4 mt-4">
+                      <div class=" font-weight-600">
+                        <mdb-select [options]="_packTypeSelect" placeholder="Select Option" [formControl]="editPack.controls['pack_type']" mdbActive
+                          id="packType" class="colorful-select dropdown-primary"
+                          [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }"  ></mdb-select>
+                        <label for="packType">Pack Type</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="me-required-text left animated flash" *ngIf="pack_type.hasError('required') && pack_type.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="me-helper-text left animated fadeIn" *ngIf="!pack_type.valid && !pack_type.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Select Pack Type</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Col#01-Row#02 -->
+                  <div class="row">
+                    <div class="col-4 mt-4">
+                      <div class=" font-weight-600">
+                        <mdb-select [options]="_packPriceType" placeholder="Select Option" [formControl]="editPack.controls['pack_price_type']" mdbActive
+                          id="packPriceType" class="colorful-select dropdown-primary"
+                          [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }"  ></mdb-select>
+                        <label for="packPriceType">Pack Price Type</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="me-required-text left animated flash" *ngIf="pack_price_type.hasError('required')  && pack_price_type.touched">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Required</small>
+                        </div>
+                        <div class="me-helper-text left animated fadeIn" *ngIf="!pack_price_type.valid && !pack_price_type.touched">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Select Pack Price Type</small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="md-form font-weight-600">
+                        <input type="number" id="packPrice" class="form-control mb-0" app-restrict-input="amount" required min="10" max="99999" [formControl]="editPack.controls['pack_price']"
+                        mdbInputDirective [mdbValidate]="false" maxlength="5"
+                          [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }"  >
+                        <label for="packPrice">Pack Price</label>
+
+                        <!-- *********************  form validation  messages ********************* -->
+                        <div class="me-required-text left animated flash" *ngIf="true">
+                          <small class="red-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-warning fa-fw"></i>Enter amount greater than 0 ( required ) </small>
+                        </div>
+                        <!-- *********************  form validation  messages ********************* -->
+
+                      </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="durationType" class="font-weight-600 fnt-sz-075">Pack Status</label>
+                        <div class="switch" id="pack_status">
+                            <label>
+                                <span class="badge animated" [ngClass]="{'red  flash': this.isInactive, 'grey fadeIn': !this.isInactive  }">Inactive</span>
+                              <input type="checkbox" [formControl]="editPack.controls['pack_status']"  (click)="setStatus() " >
+                              <span class="lever"></span>
+                              <span class="badge animated" [ngClass]="{'green fadeIn': this.isActive, 'grey fadeIn': !this.isActive  }">Active</span>
+                            </label>
+                          </div>
+                    </div>
+                  </div>
+                  <!-- Col#01-Row#03 -->
+                  <div *ngIf="showDuration">
+                    <div class="row">
+                      <div class="col-4 mt-4">
+                        <div class=" font-weight-600">
+                          <mdb-select [options]="_packDurationType" placeholder="Select Option" [formControl]="editPack.controls['pack_duration_type']"
+                            mdbActive id="durationType" class="colorful-select dropdown-primary"
+                            [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }" ></mdb-select>
+                          <label for="durationType">Duration Type</label>
+
+                          <!-- *********************  form validation  messages ********************* -->
+                          <div class="me-required-text left animated flash" *ngIf="pack_duration_type.hasError('required') && pack_duration_type.touched">
+                            <small class="red-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-warning fa-fw"></i>Required</small>
+                          </div>
+                          <div class="me-helper-text left animated fadeIn" *ngIf="!pack_duration_type.valid && !pack_duration_type.touched">
+                            <small class="grey-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-info-circle fa-fw"></i>Select Duration Type</small>
+                          </div>
+                          <!-- *********************  form validation  messages ********************* -->
+
+                        </div>
+                      </div>
+
+                      <div class="col-4">
+                        <div class="md-form font-weight-600">
+                          <input mdbInputDirective [mdbValidate]="false" type="text" id="duration" class="form-control mb-0" [formControl]="editPack.controls['pack_duration']"
+                          [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }" >
+                          <label for="duration">Duration</label>
+                          <!-- *********************  form validation  messages ********************* -->
+                          <div class="me-required-text left animated flash" *ngIf="true">
+                            <small class="red-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-warning fa-fw"></i>{{durationMessage}}</small>
+                          </div>
+
+                          <!-- <div class="me-helper-text left animated fadeIn" *ngIf="!pack_duration_type.valid && !pack_duration_type.touched">
+                            <small class="grey-text fnt-sz-065">
+                              <i class="fa fa-info-circle fa-fw"></i></small>
+                          </div> -->
+
+                          <!-- *********************  form validation  messages ********************* -->
+
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Row#01Col#02 -->
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="z-depth-2  animate fadeIn  border-radius-5">
+                          <div class="list-group ">
+                              <li class="list-group-item primary-color white-text font-weight-500">
+                                <i class="fas fa-cubes  fa-fw"></i> Pack Price Details
+                              </li>
+                              <li class="list-group-item  font-weight-500">Base Price
+                                <span class="float-right">{{displaybase_price | number : '1.2-2'}}</span>
+                              </li>
+                              <div *ngIf="!nonTaxable">
+                                <div *ngIf="gstSelected">
+                                  <li class="list-group-item  font-weight-500">CGST
+                                    <small class=" font-weight-300">({{gstAmount / 2}} %)</small>
+                                    <span class="float-right">{{displaycgst | number : '1.2-2'}}</span>
+                                  </li>
+                                  <li class="list-group-item  font-weight-500">SGST
+                                    <small class=" font-weight-300">({{gstAmount / 2}} %)</small>
+                                    <span class="float-right">{{displaygst | number : '1.2-2'}}</span>
+                                  </li>
+    
+                                </div>
+                                <div *ngIf="igstSelected">
+                                  <li class="list-group-item  font-weight-500">IGST
+                                    <small class=" font-weight-300">({{gstAmount}} %)</small>
+                                    <span class="float-right">{{displayigst | number : '1.2-2'}}</span>
+                                  </li>
+    
+                                </div>
+                              </div>
+                              <li class="list-group-item  font-weight-500">Total Tax
+                                <small class=" font-weight-300">({{gstAmount}} %)</small>
+                                <span class="float-right">{{displaytotal_tax | number : '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item font-weight-500 grey lighten-3">Total Price
+                                <span class="float-right font-weight-500">{{displaytotal | number : '1.2-2'}}</span>
+                              </li>
+    
+                            </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              <!-- Row#02 -->
+              <div class="row">
+                <div class="col-12 ">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i> Current Pack Summary</h5>
+                  <div class="divider mb-2"></div>
+                  <!--Table-->
+                  <table class="table z-depth-2  border-radius-5">
+
+                    <!--Table head-->
+                    <thead class="primary-color  border-radius-5">
+                      <tr class="text-white  border-radius-5">
+                        <th>Pack Name</th>
+                        <th>Pack Type</th>
+                        <th>Duration</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody>
+
+                      <tr>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayCurrentPackName}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayCurrentPackType}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayCurrentDuration}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge blue">{{displayCurrenttotal | number : '1.2-2' }}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5 *ngIf="activeFlag">
+                            <span class="badge green">{{displayCurrentStatus}}</span>
+                          </h5>
+                          <h5 *ngIf="!activeFlag">
+                            <span class="badge red">{{displayCurrentStatus}}</span>
+                          </h5>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <!--Table-->
+                </div>
+              </div>
+              <div class="row" *ngIf="false">
+                <div class="col-12 ">
+                  <h5>Updated Pack Summary</h5>
+                  <div class="divider mb-2"></div>
+                  <!--Table-->
+                  <table class="table z-depth-2  border-radius-5">
+
+                    <!--Table head-->
+                    <thead class="primary-color white-text font-weight-400 border-radius-5">
+                      <tr class="text-white  border-radius-5">
+                        <th>Pack Name</th>
+                        <th>Pack Type</th>
+                        <th>Duration</th>
+                        <th>Total Price</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody>
+
+                      <tr>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayPackName}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayPackType}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge grey">{{displayDuration}}</span>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <span class="badge blue">{{displaytotal | number : '1.2-2' }}</span>
+                          </h5>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+                  <!--Table-->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <!-- ******************* Form Submit Bar ~ Start ******************* -->
+                  <div class="divider mt-3"></div>
+                  <div class="d-flex justify-content-end mt-1">
+                    <a [routerLink]="['/managepack']">
+                      <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                    </a>
+                    <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                  </div>
+
+                  <!-- ******************* Form Submit Bar ~ End ******************* -->
+                </div>
+              </div>
+
+            </div>
+            <!-- Card Body ~ End -->
+          </div>
+        </form>
+        <!--/.Panel-->
+      </div>
+    </div>
+
+    <!-- ************ Record History ************* -->
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-10">
+
+        <!--Table-->
+        <table class="table table-sm text-center z-depth-1">
+
+          <!--Table head-->
+          <thead class="grey lighten-3">
+            <tr class="grey-text">
+              <th>Created By</th>
+              <th>Created On</th>
+              <th>Modified By</th>
+              <th>Modified On</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+            <tr class="grey-text text-darkern-1">
+              <td>{{displayCreatedBy}}</td>
+              <td>{{displayCreatedOn | date:'EEEE, LLL d, y, h:mm:ss a' }}</td>
+              <td>{{displayModifiedBy}}</td>
+              <td>{{displayModifiedOn | date:'EEEE, LLL d, y, h:mm:ss a' }}</td>
+            </tr>
+
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+    <!-- ************ Record History ************* -->
+  </div>
+  <!--Container ~ End-->
+</main>
+<!--Main Layout ~ End-->

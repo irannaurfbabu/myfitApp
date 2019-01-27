@@ -1,0 +1,109 @@
+<!--Double navigation-->
+<header>
+  <app-me-gym-navigation></app-me-gym-navigation>
+</header>
+<!--/.Double navigation-->
+
+<!--Main Layout-->
+<main class="">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <!--Panel-->
+        <div class="card">
+          <!-- card header -->
+          <div class="d-flex align-items-center card-header primary-color m-0 p-0">
+              <div class="col-5">
+                <h4 class="white-text">
+                  <i class="fas fa-cubes fa-fw fa-1x"></i> Manage Pack
+  
+                </h4>
+              </div>
+              <div class="col-5">
+                <!-- ********** Search Bar **********  -->
+                <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here" [showUnderline]="true"
+                  (searchDebounce)="search($event)" flex>
+  
+                </td-search-box>
+                <!-- ********** Search Bar **********  -->
+              </div>
+              <div class="col-2">
+                <a class="btn btn-outline-default btn-rounded btn-sm float-right " mdbRippleRadius [routerLink]="['/createpack']">
+                  <span class="white-text">Add</span>
+                </a>
+              </div>
+            </div>
+  
+          <!-- card header -->
+          <!-- card body -->
+          <div class="card-body mt-0 pt-0 min-height-200">
+            <div class="row">
+              <!-- ********** Show Progress Bar **********  -->
+              <div class="col-12 mt-3" *ngIf="showProgressBar">
+                  <app-me-gym-linear-loader> </app-me-gym-linear-loader>
+              </div>
+              <!-- ********** Show Progress Bar **********  -->
+              <!-- ********** Show Table **********  -->
+              <div class="col-12" *ngIf="!showProgressBar">
+                <div class="d-flex mt-2">
+                  <div class="col-12">
+                    <td-data-table #dataTable [data]="filteredData" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+                      [sortOrder]="sortOrder" (sortChange)="sort($event)" [style.height.px]="500">
+                      <ng-template tdDataTableTemplate="active" let-value="value">
+                        <span *ngIf="value == 'Y'" class="badge badge-success">Active</span>
+                        <span *ngIf="value != 'Y'" class="badge badge-danger">InActive</span>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="pack_id" let-value="value">
+                        <a [routerLink]="['/editpack', value]">
+                          <i class="fas fa-edit fa-lg teal-text text-darken-3 "></i>
+                        </a>
+                      </ng-template>
+                      <ng-template tdDataTableTemplate="pack_duration" let-value="value" let-row="row">
+                        <span *ngIf="value > 0">{{value }} {{row['duration_desc']}}</span>
+                      </ng-template>
+                    </td-data-table>
+                    <div class="d-flex justify-content-end">
+                      <div class="col-6">
+                        <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+                          <span hide-xs>Rows per page:</span>
+                          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+                            <mat-option *ngFor="let size of [50,100,500]" [value]="size">
+                              {{size}}
+                            </mat-option>
+                          </mat-select>
+                          {{pagingBar.range}}
+                          <span hide-xs>of {{pagingBar.total}}</span>
+                        </td-paging-bar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- ********** Show Table **********  -->
+
+               <!-- ********** Show No Records **********  -->
+               <div class="col-12 animate fadeIn" *ngIf="showNoRecords">
+                  <blockquote class="blockquote bq-danger m-1 p-1">
+                    <p class="bq-title m-0 p-0">
+                      <i class="far fa-times-circle fa-fw fa-1x"></i> Error</p>
+                    <p class=" m-1 p-1 red-text">
+                      <span class="badge badge-danger">No Records</span>
+                      <span class="ml-1">There are no records for this owner.</span>
+                    </p>
+                  </blockquote>
+                </div>
+                <!-- ********** Show No Records**********  -->
+
+            </div>
+          </div>
+			 <!-- card body -->
+		  
+        </div>
+        <!--/.Panel-->
+
+      </div>
+    </div>
+  </div>
+</main>
+<!--/Main layout-->

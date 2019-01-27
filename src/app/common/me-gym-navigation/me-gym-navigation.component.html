@@ -1,0 +1,153 @@
+<!-- Sidebar navigation -->
+<mdb-sidenav #sidenav [fixed]="false">
+
+  <logo>
+    <li>
+      <div class="logo-wrapper waves-light mb-2">
+        <a href="#">
+          <img src="assets/images/melogo.png" class="img-fluid flex-center">
+        </a>
+      </div>
+    </li>
+  </logo>
+
+  <links>
+    <!--Social-->
+    <li class="mt-10">
+
+      <div class="d-flex flex-column p-2">
+        <p>
+          <i class="fas fa-user-circle fa-fw"></i>{{userName}}
+        </p>
+        <p>
+          <i class="far fa-envelope fa-fw"></i>{{email}}
+        </p>
+      </div>
+    </li>
+    <li>
+      <div class="divider">
+
+      </div>
+    </li>
+    <!--/Social-->
+
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        <mdb-squeezebox [multiple]="false" aria-multiselectable="false">
+
+
+          <!-- Home link -->
+          <mdb-item class="no-collase">
+            <mdb-item-head mdbRippleRadius>
+              <a [routerLink]="['/home']" class="waves-effect" mdbRippleRadius>
+                <i class="fas fa-home fa-fw"></i> Home</a>
+            </mdb-item-head>
+            <mdb-item-body></mdb-item-body>
+          </mdb-item>
+
+          <!-- Form link -->
+          <mdb-item>
+            <mdb-item-head mdbRippleRadius>
+              <i class="fab fa-wpforms fa-fw"></i>Forms</mdb-item-head>
+            <mdb-item-body>
+              <ul>
+                <li>
+                  <a [routerLink]="['/managecustomer']" class="waves-effect" mdbRippleRadius>Manage Customer</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/manageemployees']" class="waves-effect" mdbRippleRadius>Manage Employees</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/managecomplaint']" class="waves-effect" mdbRippleRadius>Manage Complaints</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/manageexpense']" class="waves-effect" mdbRippleRadius>Manage Expense</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/managepack']" class="waves-effect" mdbRippleRadius>Manage Pack</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/manageenquiry']" class="waves-effect" mdbRippleRadius>Manage Enquiry</a>
+                </li>
+              </ul>
+            </mdb-item-body>
+          </mdb-item>
+
+          <!-- Report link -->
+          <mdb-item>
+            <mdb-item-head mdbRippleRadius>
+              <i class="fas fa-clipboard-list fa-fw"></i>Reports</mdb-item-head>
+            <mdb-item-body>
+              <ul>
+                <li>
+                  <a [routerLink]="['/collectionReport']" class="waves-effect" mdbRippleRadius>Collections</a>
+                </li>
+
+                <!-- <li>
+                  <a [routerLink]="['/managecustomer']" class="waves-effect" mdbRippleRadius>Customer Report</a>
+                </li> -->
+                <li>
+                  <a [routerLink]="['/newcustomersreport']" class="waves-effect" mdbRippleRadius>New Customers</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/inactivecustomers']" class="waves-effect" mdbRippleRadius>InActive Customers</a>
+                </li>
+
+                <li>
+                  <a [routerLink]="['/customerduereport']" class="waves-effect" mdbRippleRadius>Partially Paid Customers</a>
+                </li>
+              </ul>
+            </mdb-item-body>
+          </mdb-item>
+
+        </mdb-squeezebox>
+      </ul>
+    </li>
+    <!--/. Side navigation links -->
+  </links>
+  <div class="sidenav-bg mask-strong"></div>
+</mdb-sidenav>
+<!--/. Sidebar navigation -->
+
+<!-- Navbar -->
+<mdb-navbar SideClass="navbar navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav nvbar" [containerInside]="false">
+
+  <navlinks class="navbar-container">
+    <!-- SideNav slide-out button -->
+    <div class="float-left">
+      <a (click)="sidenav.toggle()" class="button-collapse-non-fixed hidden-nav">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!--/. SideNav slide-out button -->
+  </navlinks>
+
+  <logo>
+    <!-- Breadcrumb-->
+    <!-- <div class="breadcrumbs breadcrumbs-non-fixed breadcrumb-dn mr-auto">
+          <p>
+            <strong>Mobicollector Gym</strong>
+          </p>
+        </div> -->
+    <ol class="header-breadcrumb breadcrumb fp-header-breadcrumb clearfix d-none d-md-inline-flex">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']" class="font-size-4 font-weight-500">{{ownerCompanyName}}</a>
+      </li>
+    </ol>
+    <!--/. Breadcrumb-->
+  </logo>
+
+  <navlinks>
+    <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
+      <li class="nav-item">
+        <a [routerLink]="['/login']" class="nav-link waves-light" (click)="clear_cache()" mdbRippleRadius>
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="clearfix d-none d-sm-inline-block">Logout</span>
+        </a>
+      </li>
+
+    </ul>
+  </navlinks>
+</mdb-navbar>
+<!--/. Navbar -->

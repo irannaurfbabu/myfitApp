@@ -1,0 +1,111 @@
+<!--Double navigation-->
+
+<app-me-gym-navigation></app-me-gym-navigation>
+
+<!--/.Double navigation-->
+
+
+<div class="container mt-2">
+  <div class="col-12" style="margin: auto">
+    <form [formGroup]="inactiveCustomers" (ngSubmit)="onSubmit(inactiveCustomers.value)" [class.error]="!inactiveCustomers.valid && inactiveCustomers.touched">
+      <div class="card">
+        <div class="card-header primary-color white-text">
+          <h5>Inactive Customers Report</h5>
+        </div>
+        <div class="card-body">
+          <div class="row mt-3">
+            <div class="col-3">
+              <mdb-select [options]="optionsSelect" placeholder="Choose your option" [formControl]="inactiveCustomers.controls['dateRange']"></mdb-select>
+              <label>Date Range</label>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <input matInput placeholder="From Date" [matDatepicker]="picker1" [readonly]="true" id="fromDate" class="mb-0" [formControl]="inactiveCustomers.controls['fromDate']">
+
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #picker1 [disabled]="custom"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <input matInput placeholder="To Date" [matDatepicker]="picker2" [readonly]="true" id="toDate" class="mb-0" [formControl]="inactiveCustomers.controls['toDate']">
+
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #picker2 [disabled]="custom"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>SEARCH</button>
+              <button type="button" (click)="exportReport()" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>EXPORT</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="col-12 mt-2">
+    <div class="card">
+      <div class="d-flex align-items-center m-0 p-0">
+        <div class="col-6">
+          <h4 class="white-text">
+            <i class="fas fa-cubes fa-fw fa-1x"></i> Search Report
+
+          </h4>
+        </div>
+        <div class="col-6">
+          <!-- ********** Search Bar **********  -->
+          <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here"
+            [showUnderline]="true" (searchDebounce)="search($event)" flex>
+
+          </td-search-box>
+          <!-- ********** Search Bar **********  -->
+        </div>
+
+      </div>
+
+      <div class="card-body mt-0 pt-0">
+        <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+
+        </div>
+        <mat-divider></mat-divider>
+        <td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="false" [clickable]="false" [multiple]="false"
+          [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder" (sortChange)="sort($event)"
+          [style.height.px]="250">
+
+          <ng-template tdDataTableTemplate="customer_number" let-value="value">
+            <a [routerLink]="['/editcustomer', value]">
+              <i class="fas fa-edit fa-lg teal-text text-darken-3 "></i>
+            </a>
+          </ng-template>
+          <ng-template tdDataTableTemplate="pack_expiry_date" let-value="value">
+            {{value | date : 'mediumDate'}}
+          </ng-template>
+          <ng-template tdDataTableTemplate="daysAgo" let-value="value">
+            <span class="badge badge-danger">{{value}} Day(s) Ago</span>
+          </ng-template>
+        </td-data-table>
+
+        <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+          <h3>No results to display.</h3>
+        </div>
+        <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="filteredTotal" (change)="changePageSize($event)">
+          <span hide-xs>Rows per page:</span>
+          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+            <mat-option *ngFor="let size of [50,100,200,500]" [value]="size">
+              {{size}}
+            </mat-option>
+          </mat-select>
+          <span>{{pagingBarPageSize.range}}
+            <span hide-xs>of {{pagingBarPageSize.total}}</span>
+          </span>
+        </td-paging-bar>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

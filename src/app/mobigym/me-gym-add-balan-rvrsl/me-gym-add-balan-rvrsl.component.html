@@ -1,0 +1,216 @@
+<!--Double navigation-->
+<app-me-gym-navigation></app-me-gym-navigation>
+<!--/.Double navigation-->
+
+<main class="pt-1">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-8">
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-12">
+
+            <!--Card-->
+            <div class="card testimonial-card">
+
+              <!--Bacground color-->
+              <div class="card-up  primary-color white-text">
+              </div>
+
+              <!--Avatar-->
+              <div class="avatar mx-auto">
+                <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle"> -->
+                <img src="assets/images/man-18.svg" class="rounded-circle white">
+              </div>
+
+              <div class="card-body">
+                <!--Name-->
+                <h4 class="card-title font-weight-500">{{displayCustomerName}}</h4>
+                <hr>
+                <div class="d-flex justify-content-start">
+                  <div class="col-6 text-left">
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-id-badge fa-fw grey-text"></i>
+                      </span>{{displayCustomerID}}
+                    </p>
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-phone-square fa-fw grey-text"></i>
+                      </span> {{displayPhone}}
+                    </p>
+                    <small class="mb-0 pb-0">
+                      <span>
+                        <i class="fas fa-map-marker-alt fa-fw grey-text"></i>
+                      </span>{{displayAddress}}
+                    </small>
+                  </div>
+                  <div class="col-6 text-left">
+                    <p>
+                      <span *ngIf="this.isActive" class="badge badge-success">{{displayCustomerStatus}}</span>
+                      <span *ngIf="this.isInactive" class="badge badge-danger">{{displayCustomerStatus}}</span>
+                      <span *ngIf="!this.isInactive && !this.isActive" class="badge grey">{{displayCustomerStatus}}</span>
+                    </p>
+
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <strong>Due Amount:</strong>
+                        <i class="fas fa-rupee-sign mr-2 ml-2"></i>
+                      </span>
+                      <span class="badge badge-primary badge-pill">{{(this.displayOldAvlBalance * -1) | number : '1.2-2' }}</span>
+                    </p>
+                    <p class="mb-0 pb-0">
+                      <span>
+                        <strong>Due Date: </strong>
+                      </span>
+                      <span class="badge badge-primary">{{this.displayDueDate | date : 'mediumDate'}}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!--/.Card-->
+
+          </div>
+        </div>
+        <div class="row mt-2">
+          <!--Grid column-->
+          <div class="col-12">
+            <!--Panel-->
+            <div class="card">
+              <h3 class="card-header primary-color white-text">Collect Dues</h3>
+              <div class="card-body">
+                <form [formGroup]="addBalancRvrsl" (ngSubmit)="onSubmit(addBalancRvrsl.value)" [class.error]="!addBalancRvrsl.valid && addBalancRvrsl.touched">
+                  <div class="row justify-content-between">
+                    <!-- input columns - Start   -->
+                    <div class="col-6">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="md-form font-weight-600">
+                            <input mdbInputDirective [mdbValidate]="false" type="number" id="amount" class="form-control mb-0" app-restrict-input="alphanumeric"
+                              [formControl]="addBalancRvrsl.controls['amount']" required maxlength="5" [disabled]="isInactive"
+                              [ngClass]="{'me-readonly': this.isInactive }">
+                            <label for="amount">Enter Amount</label>
+
+                            <!-- *********************  form validation  messages ********************* -->
+                            <div class="animated flash" *ngIf="amount.hasError('required')  && amount.touched">
+                              <small class="red-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-warning fa-fw"></i>Required</small>
+                            </div>
+                            <div class="animated fadeIn" *ngIf="!amount.valid && !amount.touched">
+                              <small class="grey-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-info-circle fa-fw"></i>Enter Amount</small>
+                            </div>
+                            <!-- *********************  form validation  messages ********************* -->
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-6 mt-4">
+                          <div class="font-weight-600">
+                            <mdb-select [options]="_paymentMode" placeholder="Select Option" [formControl]="addBalancRvrsl.controls['payment_mode']"
+                              id="paymentMode" class="colorful-select dropdown-primary"></mdb-select>
+                            <label for="paymentMode">Payment Mode</label>
+
+                            <!-- *********************  form validation  messages ********************* -->
+                            
+                            <div class="me-helper-text left animated fadeIn">
+                              <small class="grey-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-info-circle fa-fw"></i>Select Payment Mode</small>
+                            </div>
+                            <!-- *********************  form validation  messages ********************* -->
+
+                          </div>
+                        </div>
+                        <div class="col-5">
+                          <mat-form-field class="font-weight-600">
+                            <input matInput placeholder="Next Payment Date" [matDatepicker]="dueDate" [readonly]="true" id="dob" class="mt-3 mb-0" [formControl]="addBalancRvrsl.controls['due_date']">
+                            <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi="true" #dueDate [disabled]="isDisabled"></mat-datepicker>
+                          </mat-form-field>
+                          <!-- *********************  form validation  messages ********************* -->
+                          <!-- <div class="animated flash" style=" margin-top: -20px;">
+                              <small class="red-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-warning fa-fw"></i>Required</small>
+                            </div> -->
+                          <div class="animated fadeIn" style=" margin-top: -20px;">
+                            <small class="grey-text fnt-sz-065 font-weight-600">
+                              <i class="fa fa-info-circle fa-fw"></i>Enter Next Payment Date</small>
+                          </div>
+                          <!-- *********************  form validation  messages ********************* -->
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-10">
+                          <div class="md-form font-weight-600">
+                            <input mdbInputDirective [mdbValidate]="false" type="text" id="remarks" class="form-control mb-0" app-restrict-input="alphanumeric"
+                              [formControl]="addBalancRvrsl.controls['remarks']" maxlength="50" [disabled]="isInactive" [ngClass]="{'me-readonly': this.isInactive }">
+                            <label for="remarks">Remarks</label>
+
+                            <!-- *********************  form validation  messages ********************* -->
+
+                            <div class="animated fadeIn">
+                              <small class="grey-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-info-circle fa-fw"></i>Enter remaks(optional)</small>
+                            </div>
+                            <!-- *********************  form validation  messages ********************* -->
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- input columns - End   -->
+                    <div class="col-5">
+                      <!--Panel-->
+                      <div class="card">
+                        <h4 class="card-header primary-color white-text">Balance Details</h4>
+                        <div class="card-body p-0">
+                          <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Due Amount
+                              <span class="badge badge-primary badge-pill">{{(this.displayOldAvlBalance * -1) | number : '1.2-2' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Paid Amount
+                              <span class="badge badge-primary badge-pill">{{this.displayAdvaneAmount | number : '1.2-2' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center grey lighten-3">
+                              Current Due
+                              <span class="badge badge-primary badge-pill">{{(this.displayNewAvlBalance * -1) | number : '1.2-2' }}</span>
+                            </li>
+
+                          </ul>
+
+                        </div>
+                      </div>
+                      <!--/.Panel-->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <!-- ******************* Form Submit Bar ~ Start ******************* -->
+                      <div class="divider mt-3"></div>
+                      <div class="d-flex justify-content-end mt-1">
+                        <a [routerLink]="['/customerduereport']">
+                          <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                        </a>
+                        <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                      </div>
+
+                      <!-- ******************* Form Submit Bar ~ End ******************* -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!--/.Panel-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

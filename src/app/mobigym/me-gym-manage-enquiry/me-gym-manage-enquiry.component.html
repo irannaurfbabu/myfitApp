@@ -1,0 +1,126 @@
+<!--Double navigation-->
+<header>
+    <app-me-gym-navigation></app-me-gym-navigation>
+</header>
+<!--/.Double navigation-->
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="d-flex align-items-center card-header primary-color m-0 p-0">
+                        <div class="col-5">
+                            <h4 class="white-text">
+                                <i class="fas fa-cubes fa-fw fa-1x"></i> Manage Enquiry</h4>
+                        </div>
+                        <div class="col-5">
+                            <!-- ********** Search Bar **********  -->
+                            <td-search-box #searchBox backIcon="arrow_back" [alwaysVisible]="true" class="push-center-sm pb-1" placeholder="Search here"
+                                [showUnderline]="true" (searchDebounce)="search($event)" flex>
+
+                            </td-search-box>
+                            <!-- ********** Search Bar **********  -->
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-default btn-rounded btn-sm float-right " mdbRippleRadius [routerLink]="['/createenquiry']">
+                                <span class="white-text">Create</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- ********** Show Progress Bar **********  -->
+                            <div class="col-12 mt-3" *ngIf="showProgressBar">
+                                <app-me-gym-linear-loader> </app-me-gym-linear-loader>
+                            </div>
+                            <!-- ********** Show Progress Bar **********  -->
+                            <!-- ********** Show Table **********  -->
+                            <div class="col-12" *ngIf="!showProgressBar">
+
+                                <!-- ********** DataTable **********  -->
+                                <div class="d-flex mt-2">
+                                    <div class="col-12">
+                                        <td-data-table #dataTable [data]="basicData" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+                                            [clickable]="true" (rowClick)="showAlert($event)" [sortOrder]="sortOrder" (sortChange)="sort($event)"
+                                            [style.height.px]="400">
+                                            <ng-template tdDataTableTemplate="enquiry_date" let-value="value">
+                                                <span> {{ value | date:' d-LLL-y, h:mm:ss a'}}</span>
+
+                                            </ng-template>
+
+                                            <ng-template tdDataTableTemplate="enquiry_id" let-value="value" let-row="row" let-column="column">
+
+                                                <!-- <a [routerLink]="['/editenquiry', value]">
+                                <i class="fas fa-edit fa-lg teal-text text-darken-3 "></i>
+                            </a> -->
+
+
+                                                <a class="btn-flat center-align fnt-sz-120" [matMenuTriggerFor]="menu">
+                                                    <!-- <i class="material-icons">toc</i> -->
+                                                    <i class="fas fa-gears fa-3x darkPrimaryText me-text-shawdow " style="font-size: 1.2rem !important"></i>
+                                                </a>
+                                                <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+
+                                                    <a [routerLink]="['/editenquiry', value]" mat-menu-item>
+                                                        <i class="fas fa-edit fa-lg teal-text text-darken-3 "></i>
+                                                        <span class="darkPrimaryText"> Edit Enquiry</span>
+                                                    </a>
+
+                                                    <mat-divider></mat-divider>
+                                                    <!-- <a [routerLink]="['/collectPayment',value]" mat-menu-item >
+                                      <i class="fas fa-rupee-sign fa-fw darkPrimaryText"></i>
+                                      <span class="darkPrimaryText"> Renew Subscription</span>
+                                    </a>   -->
+
+                                                    <a (click)="CustomerLink(value)" mat-menu-item>
+                                                        <i class="fas fa-exchange-alt fa-fw darkPrimaryText "></i>
+                                                        <span class="darkPrimaryText"> Convert</span>
+                                                    </a>
+
+
+
+                                                </mat-menu>
+                                            </ng-template>
+
+                                        </td-data-table>
+                                        <!-- <td-data-table [data]="basicData" [columns]="configWidthColumns"> -->
+                                        <div class="d-flex justify-content-end">
+                                            <div class="col-6">
+                                                <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+                                                    <span hide-xs>Rows per page:</span>
+                                                    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+                                                        <mat-option *ngFor="let size of [50,100,500]" [value]="size">
+                                                            {{size}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    {{pagingBar.range}}
+                                                    <span hide-xs>of {{pagingBar.total}}</span>
+                                                </td-paging-bar>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 animate fadeIn" *ngIf="showNoRecords">
+                                <blockquote class="blockquote bq-danger m-1 p-1">
+                                    <p class="bq-title m-0 p-0">
+                                        <i class="far fa-times-circle fa-fw fa-1x"></i> Error</p>
+                                    <p class=" m-1 p-1 red-text">
+                                        <span class="badge badge-danger">No Records</span>
+                                        <span class="ml-1">There are no records for this owner.</span>
+                                    </p>
+                                </blockquote>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,985 @@
+<!--Double navigation-->
+
+<app-me-gym-navigation></app-me-gym-navigation>
+
+<!--/.Double navigation-->
+
+<!--Main Layout-->
+<main class="pt-1">
+  <div class="container-fluid ">
+    <div class="d-flex justify-content-center mb-3">
+      <div class="col-10">
+        <!-- <div class="d-flex justify-content-center mb-3" *ngIf="showLoader">
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <app-me-gym-circular-loader></app-me-gym-circular-loader>
+          </div>
+        </div> -->
+        <!--Panel-->
+        
+        <form [formGroup]="customer_details" (ngSubmit)="onSubmit(customer_details.value)" [class.error]="!customer_details.valid && customer_details.touched">
+          <div class="card">
+            <h5 class="card-header primary-color white-text">
+              <i class="fas fa-pencil-square-o fa-fw"></i> Edit Customer</h5>
+            <div class="card-body">
+
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>General Information</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+              <!-- Row#01 -->
+              <div class="row mt-3">
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="customer_id" class="form-control mb-0" [formControl]="customer_details.controls['customer_id']"
+                      length="10" mdbCharCounter mdbActive>
+                    <label for="customer_id" class="font-weight-500">Customer Id</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="customer_id.hasError('required')  && customer_id.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!customer_id.valid && !customer_id.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Customer Id</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="firstName" class="form-control mb-0" [formControl]="customer_details.controls['first_name']"
+                      length="30" mdbCharCounter mdbActive>
+                    <label for="firstName">First Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="first_name.hasError('required')  && first_name.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!first_name.valid && !first_name.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter first Name</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="lastName" class="form-control mb-0" [formControl]="customer_details.controls['last_name']"
+                      length="30" mdbCharCounter mdbActive>
+                    <label for="lastName">Last Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="last_name.hasError('required')  && last_name.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!last_name.valid && !last_name.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Last Name</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3 ">
+                      <!-- <input type="file" (change)="selectFile($event)" >  -->
+                      <img [src]=locationUrl style="border-radius: 50%; margin-left: -23px; margin-top: -22px;" height="130px" width="130px" *ngIf="imageSelectedFlag">
+                      <img src="../../../assets/images/photo-upload.svg" style="margin-left: -23px; margin-top: -22px;" height="80px" width="100px" *ngIf="!imageSelectedFlag">
+                      <input type="file" (change)="selectFile($event)" style="margin-left:25px; width:88px; 
+                      font-size: small; 
+                      border: 2px solid #2d486a !important;
+                      background-color: transparent !important;
+                      color: #2d486a !important;" mdbRippleRadius>
+                   
+                  </div>
+              </div>
+
+              <!-- Row#02 -->
+              <div class="row">
+                <div class="col-3 mt-4">
+                  <div class="">
+                    <mdb-select [options]="genderSelect" placeholder="Select Option" [formControl]="customer_details.controls['gender']"></mdb-select>
+                    <label for="lastName">Gender</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="gender.hasError('required')  && gender.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!gender.valid && !gender.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Gender</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="phone" class="form-control mb-0" [formControl]="customer_details.controls['phone']"
+                      length="10" mdbCharCounter mdbActive>
+                    <label for="phone">Phone</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="phone.hasError('required')  && phone.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!phone.valid && !phone.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Phone Number</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="email" id="email" class="form-control mb-0" [formControl]="customer_details.controls['email']"
+                      length="20" mdbCharCounter mdbActive>
+                    <label for="email">Email</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="email.hasError('required')  && email.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!email.valid && !email.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Email</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="address" class="form-control mb-0" [formControl]="customer_details.controls['address']"
+                      length="50" mdbCharCounter mdbActive>
+                    <label for="address">Address</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="address.hasError('required')  && address.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!address.valid && !address.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Address</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+
+              </div>
+              <!-- Row#03 -->
+              <div class="row">
+                <div class="col-4">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="city" class="form-control mb-0" [formControl]="customer_details.controls['city']"
+                      length="20" mdbCharCounter mdbActive>
+                    <label for="city">City</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="city.hasError('required')  && city.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!city.valid && !city.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter City</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="area" class="form-control mb-0" [formControl]="customer_details.controls['area']">
+                    <label for="area">Area</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="area.hasError('required')  && area.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!area.valid && !area.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Area</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="pincode" class="form-control mb-0" [formControl]="customer_details.controls['pincode']"
+                      length="6" mdbCharCounter mdbActive>
+                    <label for="pincode">Pincode</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="pincode.hasError('required')  && pincode.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!pincode.valid && !pincode.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Pincode</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+
+              </div>
+
+              
+
+
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>Additional Information</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+              <!-- Row#04 -->
+              <div class="row mt-3">
+                <div class="col-3">
+                  <div class="">
+                    <mat-form-field class="font-weight-600">
+                      <input matInput placeholder="Date of Birth" [matDatepicker]="picker2" [readonly]="true" id="dob" class="mt-3 mb-0" [formControl]="customer_meta.controls['age']">
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #picker2 [disabled]="false"></mat-datepicker>
+                    </mat-form-field>
+                    <!-- <input mdbInputDirective [mdbValidate]="false" type="text" id="age" [formControl]="customer_meta.controls['age']" class="form-control mb-0"
+                      length="2" mdbCharCounter mdbActive>
+                    <label for="age" c>Age</label> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" style=" margin-top: -20px; " *ngIf="age.hasError('required')  && age.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" style=" margin-top: -20px; " *ngIf="!age.valid && !age.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Date of Birth</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="height" [formControl]="customer_meta.controls['height']" class="form-control mb-0"
+                      length="3" mdbCharCounter mdbActive>
+                    <label for="height">Height(cms)</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="height.hasError('required')  && height.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!height.valid && !height.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Height</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="weight" [formControl]="customer_meta.controls['weight']" class="form-control mb-0"
+                      length="3" mdbCharCounter mdbActive>
+                    <label for="weight">Weight(kgs)</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="weight.hasError('required')  && weight.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!weight.valid && !weight.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i>Enter Weight</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3 mt-4">
+                  <div class="font-weight-600">
+                    <mdb-select [options]="_bloodGroupType" placeholder="Select Option" [formControl]="customer_meta.controls['blood_group']"
+                      id="blood_group" class="colorful-select dropdown-primary"></mdb-select>
+                    <label for="blood_group">Blood Group</label>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <!-- <div class="me-required-text left animated flash" *ngIf="relationship.hasError('required') && relationship.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div> -->
+                    <div class="me-helper-text left animated fadeIn" *ngIf="!relationship.valid && !relationship.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Select Blood Group</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- Row#05 -->
+              <div class="row pb-3">
+                <div class="col-3">
+                  <div class="">
+                    <mat-form-field>
+                      <input matInput [max]="maxDate" placeholder="Registration date" [matDatepicker]="picker1" [readonly]="true" id="registration"
+                        class="mt-3 mb-0" [formControl]="customer_meta.controls['registration_date']">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #picker1 [disabled]="false"></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" style=" margin-top: -20px; " *ngIf="registration_date.hasError('required')  && registration_date.touched">
+                      <small class="red-text fnt-sz-065">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" style=" margin-top: -20px; " *ngIf="!registration_date.valid && !registration_date.touched">
+                      <small class="grey-text fnt-sz-065">
+                        <i class="fa fa-info-circle fa-fw"></i> Enter Registration Date</small>
+                    </div>
+                    <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+
+                <div class="col-3">
+                  <h5 class="mb-1 mt-3">BMI Value: {{bmiValue | number : '1.2-2'}}</h5>
+                </div>
+
+                <div class="col-3">
+                  <h5 class="mb-1 mt-3">Age: {{customerAge}} </h5>
+                </div>
+
+                <div class="col-3">
+                  <div class="md-form">
+                    <div class="switch">
+                      <label>
+                        <span class="badge lighten-1" [ngClass]="{'red': this.isInactive, 'grey': !this.isInactive  }">Inactive</span>
+                        <input type="checkbox" [formControl]="customer_details.controls['status']" (click)="setStatus() ">
+                        <span class="lever"></span>
+                        <span class="badge lighten-1" [ngClass]="{'green': this.isActive, 'grey': !this.isActive  }">Active</span>
+
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="me-subheader">
+                    <i class="fa fa-dot-circle-o fa-fw"></i>Emergency Contact</h5>
+                  <div class="divider mb-2 primary-color"></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3 mt-4">
+                  <div class="font-weight-600">
+                    <mdb-select [options]="_relationshipType" placeholder="Select Option" [formControl]="customer_meta.controls['relationship']"
+                      id="role" class="colorful-select dropdown-primary"></mdb-select>
+                    <label for="role">Relationship</label>
+
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="me-required-text left animated flash" *ngIf="relationship.hasError('required') && relationship.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="me-helper-text left animated fadeIn" *ngIf="!relationship.valid && !relationship.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Select Relationship</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="fullName" class="form-control mb-0" [formControl]="customer_meta.controls['fullName']"
+                      mdbCharCounter mdbActive>
+                    <label for="fullName">Full Name</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="fullName.hasError('required')  && fullName.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!fullName.valid && !fullName.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency Contact Name</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="ePhone" class="form-control mb-0" [formControl]="customer_meta.controls['ePhone']"
+                      length="10" mdbCharCounter mdbActive>
+                    <label for="ePhone">Emergency Contact Number</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="ePhone.hasError('required')  && ePhone.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!ePhone.valid && !ePhone.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency Contact Number</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="md-form font-weight-600">
+                    <input mdbInputDirective [mdbValidate]="false" type="text" id="eAddress" class="form-control mb-0" [formControl]="customer_meta.controls['eAddress']">
+                    <label for="eAddress">Emergency Address</label>
+                    <!-- *********************  form validation  messages ********************* -->
+                    <div class="animated flash" *ngIf="eAddress.hasError('required')  && eAddress.touched">
+                      <small class="red-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-warning fa-fw"></i>Required</small>
+                    </div>
+                    <div class="animated fadeIn" *ngIf="!eAddress.valid && !eAddress.touched">
+                      <small class="grey-text fnt-sz-065 font-weight-600">
+                        <i class="fa fa-info-circle fa-fw"></i>Emergency Contact Address</small>
+                    </div>
+                    <!-- *********************  form validation  messages ********************* -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row#06 -->
+
+              <!--Panel-->
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header primary-color white-text">
+                      <i class="fa fa-dot-circle-o fa-fw"></i>Subscription Details
+                    </div>
+                    <div class="card-body">
+
+
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Nav tabs -->
+                          <!-- <mdb-tabset #staticTabs [buttonClass]="'nav-tabs tabs-3 primary-color'" [contentClass]="''"> -->
+
+                          <!--Panel 1-->
+                          <!-- <mdb-tab heading="PREPAID">
+                              <div class="row">
+                                <div class="col-12">
+                                  <br> -->
+                          <div class="row mt-2">
+                            <div class="col-3">
+                              <div class="md-form">
+                                <input type="text" class="mt-3" id="pack" [formControl]="subscription_details.controls['select_prepaid_pack']" initialValue="Select Pack"
+                                  name="autocomplete" matInput [matAutocomplete]="auto" (click)="getPrepaidPackList()">
+                                <label for="pack" style="top: 0px">Select Pack</label>
+
+
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let pack of filteredPack | async" [value]="pack.pack_name">
+                                    {{ pack.pack_name}}
+                                  </mat-option>
+
+                                </mat-autocomplete>
+
+                                <!-- *********************  form validation  messages ********************* -->
+
+                                <div class="animated flash">
+                                  <small class="grey-text fnt-sz-065">
+                                    <i class="fa fa-info-circle fa-fw"></i>Step 1: Select Pack</small>
+                                </div>
+                                <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                                <!-- *********************  form validation  messages ********************* -->
+                              </div>
+                            </div>
+                            <div class="col-3">
+                              <div class="md-form">
+                                <mat-form-field>
+                                  <input matInput placeholder="Activation Date" [matDatepicker]="picker" [readonly]="true" id="activation" class="mb-0" [formControl]="subscription_details.controls['prepaidPack_activation_date']">
+
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker touchUi="true" #picker [disabled]="false"></mat-datepicker>
+                                </mat-form-field>
+
+                                <!-- *********************  form validation  messages ********************* -->
+
+                                <div class="animated flash" style=" margin-top: -20px; ">
+                                  <small class="grey-text fnt-sz-065">
+                                    <i class="fa fa-info-circle fa-fw"></i>Step 2: Enter Activation Date</small>
+                                </div>
+                                <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                                <!-- *********************  form validation  messages ********************* -->
+                              </div>
+                            </div>
+
+                            <div class="col-3 mt-2">
+                              <div class="md-form font-weight-600" *ngIf="displayExtPeriod">
+                                <input mdbInputDirective [mdbValidate]="false" type="number" id="extention" [formControl]="subscription_details.controls['extention_period']"
+                                  class="form-control mb-0" length="3" mdbCharCounter mdbActive>
+                                <label for="extention">Extention Period</label>
+                                <!-- *********************  form validation  messages ********************* -->
+
+                                <div class="animated fadeIn">
+                                  <small class="grey-text fnt-sz-065 font-weight-600">
+                                    <i class="fa fa-info-circle fa-fw"></i>Enter Days</small>
+                                </div>
+                                <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                                <!-- *********************  form validation  messages ********************* -->
+                              </div>
+                            </div>
+                            <div class="col-3">
+                              <div class="md-form">
+                                <button type="button" class="btn btn-outline-default btn-rounded waves-light btn-sm" (click)="addPrepaidSubscriptionDetails()"
+                                  mdbRippleRadius>
+                                  <i class="fas fa-plus-circle mr-1"></i> Add</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <mat-checkbox (click)="toggleExtPeriod()">Enable Extention Period</mat-checkbox>
+
+                            </div>
+                          </div>
+                          <br>
+                          <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-2 pills-primary white mb-2'" [contentClass]="''">
+                            <!--Panel 1-->
+                            <mdb-tab heading="Current Subscription">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <h5 style="color: rgb(49, 75, 71)">
+
+                                        <span style="margin-left: 2px"></span>
+                                        <strong>Current Subscription Details</strong>
+                                      </h5>
+                                    </div>
+
+                                  </div>
+                                  <table class="table table-striped">
+                                    <thead class="primary-color white-text">
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Pack Name</th>
+                                        <th>Activation Date</th>
+                                        <th>Expiry Date</th>
+                                        <!-- <th>Pack Type</th> -->
+                                        <th>Pack Price</th>
+                                        <th>Pack Duration</th>
+                                        <th>Extention Period</th>
+                                        <th>Expiring In</th>
+                                        <th>Renew</th>
+
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngIf="_currentSubscription.length == 0">
+                                        <td colspan="9" class="text-center">
+                                          <div>
+                                            <span class=" badge me-status-chip red lighten-1">No Records</span>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                      <tr *ngFor="let pack of _currentSubscription let i= index">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{pack.pack_name}}</td>
+                                        <td>{{pack.pack_activation_date | date : 'mediumDate'}}</td>
+                                        <td>{{pack.pack_expiry_date | date : 'mediumDate'}}</td>
+                                        <!-- <td>{{pack.pack_type | uppercase}}</td> -->
+                                        <td>{{pack.total_amount | number: '1.2-2'}}</td>
+                                        <td>{{pack.pack_duration}} {{pack.duration_desc}}</td>
+                                        <td>{{pack.extention_period}} Day(s)</td>
+                                        <td *ngIf="pack.expiringIn =='0'">
+                                          <span class="badge badge-warning">Last Day</span>
+                                        </td>
+                                        <td *ngIf="pack.expiringIn > 0">
+                                          <span class="badge badge-primary">{{pack.expiringIn}} Days</span>
+                                        </td>
+                                        <td>
+                                          <i class="far fa-edit" (click)="renewPack(pack.pack_id,pack.expiringIn,pack_activation_date)"></i>
+                                        </td>
+                                        <!-- <td>
+                                                <i (click)="deletePrepaidPack(pack.pack_id)" class="fa fa-trash red-text" aria-hidden="true"></i>
+                                              </td> -->
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </mdb-tab>
+                            <!--Panel 2-->
+                            <mdb-tab heading="Expired Subscription">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <h5 style="color: rgb(49, 75, 71)">
+
+                                        <span style="margin-left: 2px"></span>
+                                        <strong>Expired Subscription Details</strong>
+                                      </h5>
+                                    </div>
+
+                                  </div>
+                                  <table class="table table-striped">
+                                    <thead class="primary-color white-text">
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Pack Name</th>
+                                        <th>Activation Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Pack Type</th>
+                                        <th>Pack Price</th>
+                                        <th>Pack Duration</th>
+                                        <th>Expiring In</th>
+                                        <th>Renew</th>
+
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngIf="_expiredSubscription.length == 0">
+                                        <td colspan="9" class="text-center">
+                                          <div>
+                                            <span class=" badge me-status-chip red lighten-1">No Records</span>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                      <tr *ngFor="let pack of _expiredSubscription let i= index">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{pack.pack_name}}</td>
+                                        <td>{{pack.pack_activation_date | date : 'mediumDate'}}</td>
+                                        <td>{{pack.pack_expiry_date | date : 'mediumDate'}}</td>
+                                        <td>{{pack.pack_type | uppercase}}</td>
+                                        <td>{{pack.total_amount | number: '1.2-2'}}</td>
+                                        <td>{{pack.pack_duration}} {{pack.duration_desc}}</td>
+                                        <td>
+                                          <span class="badge badge-danger">Expired</span>
+                                        </td>
+                                        <td>
+                                          <i class="far fa-edit" (click)="renewPack(pack.pack_id,pack.expiringIn,pack_activation_date)"></i>
+                                        </td>
+
+                                        <!-- <td>
+                                                <i (click)="deletePrepaidPack(pack.pack_id)" class="fa fa-trash red-text" aria-hidden="true"></i>
+                                              </td> -->
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </mdb-tab>
+                            <!--Panel 3-->
+
+                            <!--Panel 4-->
+
+                          </mdb-tabset>
+
+
+                          <br>
+
+                          <div *ngIf="prepaidPackArrayNew.length > 0">
+                            <div class="">
+                              <h5>
+
+                                <span style="margin-left: 2px"></span>
+                                <strong> New Subscription Details</strong>
+                              </h5>
+                            </div>
+                            <div>
+                              <table class="table table-striped" *ngIf="prepaidPackArrayNew.length > 0">
+                                <thead class="primary-color white-text">
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Pack Name</th>
+                                    <th>Activation Date</th>
+                                    <th>Expiry Date</th>
+                                    <th>Pack Type</th>
+                                    <th>Pack Price</th>
+                                    <th>Pack Duration</th>
+                                    <th>Extention Period</th>
+                                    <th>Action</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+
+
+                                  <tr *ngFor="let pack of prepaidPackArrayNew let i= index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{pack.pack_name}}</td>
+                                    <td>{{pack.pack_activation_date | date : 'mediumDate'}}</td>
+                                    <td>{{pack.pack_expiry_date | date : 'mediumDate'}}</td>
+                                    <td>{{pack.pack_type | uppercase}}</td>
+                                    <td>{{pack.total_amount | number: '1.2-2'}}</td>
+                                    <td>{{pack.pack_duration}} {{pack.duration_desc}}</td>
+                                    <td>{{pack.extention_period}} Day(s)</td>
+
+                                    <td>
+                                      <i (click)="deletePrepaidPack(pack.pack_id)" class="fa fa-trash red-text" aria-hidden="true"></i>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+
+
+                          <!-- Row#07 -->
+                          <!-- <div class="row mt-3">
+                            <div class="col-12"> -->
+                          <!--Panel-->
+                          <!-- <div class="row mt-3">
+                                <div class="col-12">
+                                  <h5 style="color: rgb(59, 54, 52);">
+                                    <strong> Prepaid Pricing Details</strong>
+                                  </h5>
+                                </div>
+
+                              </div>
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Pack Name</th>
+                                    <th>Base Price</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>Total Tax</th>
+                                    <th>Total Price</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngIf="prepaidPackArray.length == 0">
+                                    <td colspan="8" class="text-center">
+                                      <div>
+                                        <span class=" badge me-status-chip red lighten-1">No Records</span>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr *ngFor="let pack of prepaidPackArray let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{pack.pack_name}}</td>
+                                    <td>{{pack.base_price}}</td>
+                                    <td>{{pack.cgst_amount}}</td>
+                                    <td>{{pack.sgst_amount}}</td>
+                                    <td>{{pack.total_tax}}</td>
+                                    <td>{{pack.total_amount}}</td>
+                                  </tr>
+
+                                  <tr class="grey lighten-3">
+                                    <th colspan="2">
+                                      <i class="fas fa-cart-plus blue-grey-text"></i>
+                                      <span class="font-weight-500">Total</span>
+                                    </th>
+                                    <td class="font-weight-500">{{total_prepaid_base_price | number: '1.2-2'}}</td>
+                                    <td class="font-weight-500">{{total_prepaid_cgst_amount | number: '1.2-2'}}</td>
+                                    <td class="font-weight-500">{{total_prepaid_sgst_amount | number: '1.2-2'}}</td>
+                                    <td class="font-weight-500">{{total_prepaid_tax_amount | number: '1.2-2'}}</td>
+                                    <td class="font-weight-500">{{total_prepaid_amount_value | number: '1.2-2'}}</td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                            </div>
+                          </div> -->
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="prepaidPackArrayNew.length > 0">
+
+                <div class="card mt-2">
+                  <div class="card-header primary-color white-text">
+                    Make Payments
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+
+                      <div class="col-7">
+                        <div class="row">
+                          <div class="col-4">
+                            <div class="md-form font-weight-500">
+                              <input mdbInputDirective [mdbValidate]="false" type="number" id="rebate" class="form-control mb-0" app-restrict-input="alphanumeric"
+                                required maxlength="5" [formControl]="payment_details.controls['rebate_amount']">
+                              <label for="rebate">Discount Amount</label>
+                              <div class="animated flash" *ngIf="rebate_amount.hasError('required')  && rebate_amount.touched">
+                                <small class="red-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-warning fa-fw"></i>Required</small>
+                              </div>
+                              <div class="animated fadeIn" *ngIf="!rebate_amount.valid && !rebate_amount.touched">
+                                <small class="grey-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-info-circle fa-fw"></i>Enter Discount Amount</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="md-form font-weight-500">
+                              <input mdbInputDirective [mdbValidate]="false" type="number" id="amount" class="form-control mb-0" app-restrict-input="alphanumeric"
+                                required maxlength="5" [formControl]="payment_details.controls['payment_amount']">
+                              <label for="amount">Payment Amount</label>
+                              <div class="animated flash" *ngIf="payment_amount.hasError('required')  && payment_amount.touched">
+                                <small class="red-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-warning fa-fw"></i>Required</small>
+                              </div>
+                              <div class="animated fadeIn" *ngIf="!payment_amount.valid && !payment_amount.touched">
+                                <small class="grey-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-info-circle fa-fw"></i>Enter Payment Amount</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4 mt-4">
+                            <div class="font-weight-600">
+                              <mdb-select [options]="_paymentMode" placeholder="Select Option" [formControl]="payment_details.controls['payment_mode']"
+                                id="paymentMode" class="colorful-select dropdown-primary"></mdb-select>
+                              <label for="paymentMode">Payment Mode</label>
+
+                              <!-- *********************  form validation  messages ********************* -->
+                              <div class="me-required-text left animated flash" *ngIf="payment_mode.hasError('required') && payment_mode.touched">
+                                <small class="red-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-warning fa-fw"></i>Required</small>
+                              </div>
+                              <div class="me-helper-text left animated fadeIn" *ngIf="!payment_mode.valid && !payment_mode.touched">
+                                <small class="grey-text fnt-sz-065 font-weight-600">
+                                  <i class="fa fa-info-circle fa-fw"></i>Select Payment Mode</small>
+                              </div>
+                              <!-- *********************  form validation  messages ********************* -->
+
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <div class="col-5">
+                        <div class="card">
+                          <h4 class="card-header primary-color white-text">Payment Details</h4>
+                          <div class="card-body p-0">
+                            <ul class="list-group">
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Total Amount
+                                <span class="badge badge-primary badge-pill">{{total_prepaid_amount_value | number: '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Discount
+                                <span class="badge badge-primary badge-pill">{{rebateAmount | number : '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Available Balance
+                                <span class="badge badge-primary badge-pill">{{_customerBalance | number : '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Amount to be paid
+                                <span class="badge badge-primary badge-pill">{{amountToPay - rebateAmount | number : '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Received Amount
+                                <span class="badge badge-primary badge-pill">{{enteredPaymentAmount | number: '1.2-2'}}</span>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Closing Balance
+                                <span class="badge badge-primary badge-pill">{{closingBalance | number: '1.2-2'}}</span>
+                              </li>
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card mt-2" *ngIf="prepaidPackArrayNew.length > 0">
+                <div class="card-header primary-color white-text">
+                  <h5>Next Payment Information</h5>
+                </div>
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-5">
+                      <div class="">
+                        <mat-form-field class="font-weight-600">
+                          <input matInput placeholder="Next Payment Date" [matDatepicker]="dueDate" [readonly]="true" id="dueDate" class="mt-3 mb-0"
+                            [formControl]="payment_details.controls['due_date']">
+                          <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                          <mat-datepicker touchUi="true" #dueDate [disabled]="dueDatedisable"></mat-datepicker>
+                        </mat-form-field>
+                        <!-- <input mdbInputDirective [mdbValidate]="false" type="text" id="age" [formControl]="customer_meta.controls['age']" class="form-control mb-0"
+                                  length="2" mdbCharCounter mdbActive>
+                                <label for="age" c>Age</label> -->
+                        <!-- *********************  form validation  messages ********************* -->
+                        <!-- <div class="animated flash" style=" margin-top: -20px; " *ngIf="due_date.hasError('required')  && due_date.touched">
+                              <small class="red-text fnt-sz-065 font-weight-600">
+                                <i class="fa fa-warning fa-fw"></i>Required</small>
+                            </div> -->
+                        <div class="animated fadeIn" style=" margin-top: -20px; ">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter Next Payment Date</small>
+                        </div>
+                        <!-- <div class="green-text left " style="margin-left: 45px;" *ngIf="user_password.valid  && user_password.touched"><small></small></div> -->
+                        <!-- *********************  form validation  messages ********************* -->
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="md-form font-weight-500">
+                        <input mdbInputDirective [mdbValidate]="false" type="text" id="remarks" class="form-control mb-0" app-restrict-input="alphanumeric"
+                          maxlength="50">
+                        <label for="remarks">Remarks</label>
+                        <div class="animated fadeIn">
+                          <small class="grey-text fnt-sz-065 font-weight-600">
+                            <i class="fa fa-info-circle fa-fw"></i>Enter Remarks</small>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- ******************* Form Submit Bar ~ Start ******************* -->
+              <div class="divider mt-3"></div>
+              <div class="d-flex justify-content-end mt-1">
+                <a [routerLink]="['/managecustomer']">
+                  <button type="button" class="btn btn-outline-danger btn-rounded btn-sm waves-light " mdbRippleRadius>Cancel</button>
+                </a>
+                <button type="submit" class="btn btn-outline-default  btn-rounded btn-sm waves-light " mdbRippleRadius>Submit</button>
+                <!-- <button type="button" (click)="invokeUser()" class="btn btn-outline-default btn-rounded btn-sm waves-light " mdbRippleRadius>Invoke</button> -->
+
+              </div>
+
+              <!-- ******************* Form Submit Bar ~ End ******************* -->
+            </div>
+          </div>
+          <!--/.Panel-->
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</main>
